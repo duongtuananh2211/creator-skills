@@ -7,11 +7,11 @@ description: Tạo ảnh bằng Google Flow (flow.google.com) qua Claude in Chro
 
 Skill này điều khiển Chrome thật của người dùng (đã đăng nhập Google) để tạo ảnh trong Google Flow, rồi đưa file ảnh vào thư mục của dự án đang làm.
 
-Mọi thao tác với file và config đi qua `scripts/flow_helper.py` (chỉ dùng thư viện chuẩn của Python). Trong tài liệu này, `HELPER` là đường dẫn tuyệt đối tới script đó, nằm trong thư mục chứa file SKILL.md này:
+Mọi thao tác với file và config đi qua `scripts/flow_helper.py` (chỉ dùng thư viện chuẩn của Python). Trong tài liệu này, `HELPER` là đường dẫn tuyệt đối tới script đó, nằm trong thư mục chứa file SKILL.md này. Hãy chạy script **từ thư mục gốc của dự án người dùng**, vì script đọc config từ `./skill-config.json` của thư mục đang chạy:
 
 ```bash
 HELPER="<thư-mục-skill>/scripts/flow_helper.py"
-python3 "$HELPER" config
+cd <thư-mục-gốc-dự-án> && python3 "$HELPER" config
 ```
 
 ## Đầu vào cần có trước khi mở trình duyệt
@@ -28,11 +28,11 @@ python3 "$HELPER" config
    - Chỉ cho lần này: truyền `--output-dir <path>` lúc chạy `move`.
    - Cho mọi lần sau: `python3 "$HELPER" set-output-dir <path>`.
 
-   Đường dẫn tương đối được tính từ thư mục làm việc hiện tại (dự án của người dùng), nên giá trị mặc định `./flow-images` sẽ trỏ vào thư mục `flow-images/` của dự án đang mở.
+   `output_dir` trong config được tính tương đối theo thư mục chứa `skill-config.json`, nên giá trị mặc định `./flow-images` trỏ vào `flow-images/` của dự án. Còn `--output-dir` thì được tính theo thư mục đang chạy lệnh, giống mọi đường dẫn CLI khác.
 
 ## Config: `skill-config.json`
 
-File này nằm cạnh SKILL.md. Script sẽ tự tạo nếu chưa có.
+File này nằm ở **thư mục gốc của dự án người dùng**, không nằm trong thư mục skill. Nhờ vậy mỗi dự án có dự án Flow và thư mục ảnh riêng, và việc cập nhật skill không ghi đè config. Script tự tạo file với giá trị mặc định nếu chưa có. Nếu dự án là git repo, có thể nhắc người dùng một lần rằng file này chứa id dự án Flow riêng của họ, để họ tự quyết định có commit hay không.
 
 ```json
 {

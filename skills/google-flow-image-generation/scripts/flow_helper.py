@@ -20,8 +20,9 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-SKILL_DIR = Path(__file__).resolve().parent.parent
-DEFAULT_CONFIG_PATH = SKILL_DIR / "skill-config.json"
+# The config lives in the user's project (the agent's working directory), so each
+# project keeps its own Flow project id and output folder.
+DEFAULT_CONFIG_PATH = Path.cwd() / "skill-config.json"
 DEFAULT_CONFIG = {
     "flow_project_id": "",
     "output_dir": "./flow-images",
@@ -43,10 +44,12 @@ def save_config(path, data):
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def resolve_dir(value):
-    # Relative paths resolve against the current working directory, i.e. the
-    # project the agent is working in, not the skill folder.
-    return Path(value).expanduser().resolve()
+def resolve_dir(value, config_path):
+    # Relative paths resolve against the folder holding skill-config.json.
+    path = Path(value).expanduser()
+    if not path.is_absolute():
+        path = config_path.resolve().parent / path
+    return path.resolve()
 
 
 def parse_project_id(value):
@@ -100,8 +103,8 @@ def cmd_config(args, config):
         "flow_project_id": config["flow_project_id"],
         "project_url": f"https://flow.google.com/project/{config['flow_project_id']}"
         if config["flow_project_id"] else None,
-        "output_dir": str(resolve_dir(config["output_dir"])),
-        "downloads_dir": str(resolve_dir(config["downloads_dir"])),
+        "output_dir": str(resolve_dir(config["output_dir"], args.config)),
+        "downloads_dir": str(resolve_dir(config["downloads_dir"], args.config)),
     }, indent=2, ensure_ascii=False))
 
 
@@ -114,7 +117,7 @@ def cmd_set_project(args, config):
 def cmd_set_output_dir(args, config):
     config["output_dir"] = args.path
     save_config(args.config, config)
-    print(json.dumps({"output_dir": str(resolve_dir(args.path))}, ensure_ascii=False))
+    print(json.dumps({"output_dir": str(resolve_dir(args.path, args.config))}, ensure_ascii=False))
 
 
 def cmd_mark(args, config):
@@ -123,8 +126,10 @@ def cmd_mark(args, config):
 
 
 def cmd_move(args, config):
-    downloads = resolve_dir(config["downloads_dir"])
-    output = resolve_dir(args.output_dir or config["output_dir"])
+    downloads = resolve_dir(config["downloads_dir"], args.config)
+    # A one-off --output-dir is relative to where the command runs, like any CLI path.
+    output = Path(args.output_dir).expanduser().resolve() if args.output_dir \
+        else resolve_dir(config["output_dir"], args.config)
     deadline = time.time() + args.timeout
 
     images = []
@@ -164,7 +169,8 @@ def cmd_move(args, config):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG_PATH, help="Path to skill-config.json")
+    parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG_PATH,
+                        help="Path to skill-config.json (default: ./skill-config.json in the project)")
     sub = parser.add_subparsers(dest="command", required=True)
 
     sub.add_parser("config")

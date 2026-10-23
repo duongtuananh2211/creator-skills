@@ -63,7 +63,7 @@ Nếu bạn chưa nói rõ ảnh ngang (16:9) hay dọc (9:16), Claude sẽ hỏ
 
 ### Cấu hình
 
-File `skill-config.json` nằm trong thư mục skill đã cài, ví dụ `.claude/skills/google-flow-image-generation/skill-config.json`:
+File `skill-config.json` nằm ở thư mục gốc của dự án bạn đang làm (thư mục mở Claude Code). Mỗi dự án có cấu hình riêng, và lần đầu dùng skill sẽ tự tạo file này:
 
 ```json
 {
@@ -76,10 +76,10 @@ File `skill-config.json` nằm trong thư mục skill đã cài, ví dụ `.clau
 | Khoá | Ý nghĩa |
 | --- | --- |
 | `flow_project_id` | Id dự án trong `https://flow.google.com/project/{id}`. Để trống thì skill sẽ tự tạo dự án và điền vào. |
-| `output_dir` | Thư mục lưu ảnh. Đường dẫn tương đối được tính từ thư mục dự án đang mở trong Claude Code. |
+| `output_dir` | Thư mục lưu ảnh. Đường dẫn tương đối được tính từ thư mục chứa `skill-config.json`. |
 | `downloads_dir` | Thư mục tải xuống của Chrome. |
 
-Bạn có thể sửa file trực tiếp, nhờ Claude đổi, hoặc chạy script:
+Bạn có thể sửa file trực tiếp, nhờ Claude đổi, hoặc chạy script từ thư mục gốc của dự án:
 
 ```bash
 SKILL=.claude/skills/google-flow-image-generation   # hoặc ~/.claude/skills/... nếu cài global
@@ -88,4 +88,4 @@ python3 $SKILL/scripts/flow_helper.py set-project https://flow.google.com/projec
 python3 $SKILL/scripts/flow_helper.py set-output-dir assets/images
 ```
 
-Lưu ý: `npx skills update` có thể ghi đè `skill-config.json` bằng bản trống trong repo. Hãy kiểm tra lại id dự án sau khi cập nhật.
+File này chứa id dự án Flow của riêng bạn. Nếu không muốn đưa nó lên git, hãy thêm `skill-config.json` vào `.gitignore` của dự án.
