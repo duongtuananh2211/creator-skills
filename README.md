@@ -8,6 +8,7 @@ Bộ agent skill cho Claude Code phục vụ công việc sáng tạo nội dung
 | [`story-content-writer`](skills/story-content-writer/SKILL.md) | Biến chuyện thật của bạn thành kịch bản video ngắn, kịch bản YouTube dài, bài viết hoặc carousel kể chuyện. |
 | [`story-hook-writer`](skills/story-hook-writer/SKILL.md) | Viết 8–10 phương án câu mở đầu, tiêu đề, chữ thumbnail, có gắn nhãn loại và lọc giật tít, mồi tương tác. |
 | [`story-content-review`](skills/story-content-review/SKILL.md) | Chấm bản nháp theo 10 tiêu chí kể chuyện và kiểm tra riêng từng định dạng, trả về sửa đổi theo mức độ ưu tiên. |
+| [`story-voice-script`](skills/story-voice-script/SKILL.md) | Chuyển kịch bản thành lời đọc dán thẳng vào ElevenLabs hoặc Vbee, theo giọng điệu chọn (vui vẻ, tâm sự, hồi hộp…). |
 
 ## Cài đặt bằng npx
 
@@ -43,21 +44,22 @@ git clone https://github.com/duongtuananh2211/creator-skills.git
 ln -s "$PWD/creator-skills/skills/google-flow-image-generation" ~/.claude/skills/
 ```
 
-Cài cả ba skill kể chuyện một lần:
+Cài cả bốn skill kể chuyện một lần:
 
 ```bash
-npx skills add duongtuananh2211/creator-skills --skill story-content-writer story-hook-writer story-content-review --agent claude-code
+npx skills add duongtuananh2211/creator-skills --skill story-content-writer story-hook-writer story-content-review story-voice-script --agent claude-code
 ```
 
 ## Bộ skill kể chuyện cho mạng xã hội
 
-Ba skill dành cho creator xây thương hiệu cá nhân, kể chuyện của chính mình trên TikTok, Reels, Shorts, YouTube, Facebook, Threads, LinkedIn, X và carousel. Mỗi skill cài và dùng riêng được, nhưng dùng cùng nhau thì thành một vòng: viết, chọn câu mở đầu, rồi chấm và sửa.
+Bốn skill dành cho creator xây thương hiệu cá nhân, kể chuyện của chính mình trên TikTok, Reels, Shorts, YouTube, Facebook, Threads, LinkedIn, X và carousel. Mỗi skill cài và dùng riêng được, nhưng dùng cùng nhau thì thành một vòng: viết, chọn câu mở đầu, chấm và sửa, rồi chuyển thành lời đọc cho giọng AI.
 
 | Skill | Bạn nói gì | Bạn nhận được gì |
 | --- | --- | --- |
 | `story-content-writer` | "Viết kịch bản TikTok 60 giây từ chuyện mình nghỉ việc" | Kịch bản hoặc bài hoàn chỉnh theo khuôn của định dạng, cấu trúc đã chọn, 2–3 câu mở đầu thay thế |
 | `story-hook-writer` | "Đặt tiêu đề và chữ thumbnail cho video này" | Bảng phương án theo loại câu móc, mỗi phương án được gắn 🟢/🟡/🔴, kèm 2–3 đề xuất và cách A/B test |
 | `story-content-review` | "Review giúp bài này, đăng được chưa?" | Điểm /50, vấn đề xếp theo 🔴 nghiêm trọng → 🟠 cấu trúc → 🟡 câu chữ, có trích nguyên văn và câu viết lại |
+| `story-voice-script` | "Chuyển kịch bản này thành voice script cho Vbee, giọng tâm sự" | Bản dán sạch theo đúng cú pháp công cụ (tag ElevenLabs v3/v4, `<break>` cho Flash, chỉ chữ và dấu câu cho Vbee), cài đặt gợi ý, bảng cách đọc, checklist nghe thử |
 
 Nguyên tắc chung của cả bộ:
 
