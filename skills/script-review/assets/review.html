@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review kịch bản</title>
+<style>
+:root{
+  --bg:#f6f5f2; --surface:#ffffff; --surface2:#f0eee9; --text:#1f2328; --muted:#6a7078; --border:#dcd9d2;
+  --accent:#2f6fed; --accent-text:#ffffff; --ok:#1f9d55; --danger:#d63939;
+  --c-sua:245,158,11; --c-cat:239,68,68; --c-hoi:59,130,246; --c-giu:34,197,94; --c-khac:139,139,154;
+  --shadow:0 6px 24px rgba(0,0,0,.14);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16181b; --surface:#1f2226; --surface2:#2a2e33; --text:#e6e8ea; --muted:#9aa1a9; --border:#394048;
+    --accent:#6c9bff; --accent-text:#0d1117; --ok:#4cc27f; --danger:#ff6b6b;
+    --shadow:0 6px 24px rgba(0,0,0,.5);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit;cursor:pointer}
+textarea,input[type=text]{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 10px;width:100%}
+textarea:focus,input:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+/* header */
+#top{position:sticky;top:0;z-index:30;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 16px;display:grid;gap:8px}
+.top-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
+.title{font-weight:650;font-size:1.05rem;overflow-wrap:anywhere}
+.pill{display:inline-block;padding:1px 10px;border-radius:999px;background:var(--surface2);border:1px solid var(--border);font-size:.82rem;color:var(--muted)}
+.counters{display:flex;gap:6px;flex-wrap:wrap}
+.spacer{flex:1}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.seg button{border:0;background:var(--surface);padding:6px 12px}
+.seg button+button{border-left:1px solid var(--border)}
+.seg button[aria-pressed=true]{background:var(--accent);color:var(--accent-text);font-weight:600}
+.primary{background:var(--accent);color:var(--accent-text);border:0;border-radius:8px;padding:8px 16px;font-weight:600}
+.primary:disabled{opacity:.5;cursor:not-allowed}
+.ghost{background:transparent;border:1px solid var(--border);border-radius:8px;padding:6px 12px}
+#overall{resize:vertical;min-height:38px;height:38px;transition:height .15s}
+#overall:focus{height:90px}
+
+/* layout */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;max-width:1280px;margin:0 auto;padding:16px}
+@media (max-width:900px){.layout{grid-template-columns:1fr}}
+#side{align-self:start;position:sticky;top:calc(var(--hh,120px) + 12px);max-height:calc(100vh - var(--hh,120px) - 24px);overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px}
+@media (max-width:900px){#side{position:static;max-height:none}}
+#side h2{margin:0 0 8px;font-size:1rem}
+
+/* previous round */
+#prev{margin:0 0 14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:8px 14px}
+#prev summary{cursor:pointer;font-weight:600}
+.prev-item{border-top:1px solid var(--border);padding:8px 0;font-size:.92rem}
+.prev-item:first-of-type{margin-top:8px}
+.resp{margin-top:4px;padding:6px 8px;border-radius:8px;background:var(--surface2);font-size:.9rem}
+.st{display:inline-block;padding:0 8px;border-radius:999px;font-size:.8rem;font-weight:600;margin-right:6px;color:#fff}
+.st-da-sua{background:#1f9d55}.st-giu-nguyen{background:#6a7078}.st-can-ban-quyet{background:#d97706}
+
+/* blocks */
+.block{position:relative;background:var(--surface);border:1px solid transparent;border-left:4px solid var(--border);border-radius:10px;padding:10px 14px;margin:8px 0}
+.block:hover,.block:focus-within{border-color:var(--border);border-left-color:var(--accent)}
+.block.commented{border-left-color:rgb(var(--c-sua))}
+.block.ok{border-left-color:var(--ok)}
+.block.t-heading{background:transparent;padding:6px 14px}
+.hd{margin:6px 0 0;line-height:1.3}
+h1.hd{font-size:1.6rem}h2.hd{font-size:1.35rem}h3.hd{font-size:1.15rem}h4.hd,h5.hd,h6.hd{font-size:1rem}
+.t{white-space:pre-wrap;overflow-wrap:anywhere}
+.li{display:flex;gap:8px}.li .bullet{color:var(--muted);flex:none;min-width:1.2em}
+.t-quote .t{border-left:3px solid var(--border);padding-left:10px;color:var(--muted)}
+.t-code .t{font-family:ui-monospace,Menlo,monospace;font-size:.9rem}
+.actions{position:absolute;top:6px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity .12s;background:var(--surface);border-radius:8px}
+.block:hover .actions,.block:focus-within .actions{opacity:1}
+@media (hover:none){.actions{opacity:1;position:static;justify-content:flex-end;margin-bottom:4px}}
+.act{border:1px solid var(--border);background:var(--surface);border-radius:8px;padding:2px 8px;font-size:.84rem}
+.act.on{background:var(--ok);color:#fff;border-color:var(--ok)}
+.badges{position:absolute;right:10px;bottom:6px;display:flex;gap:6px;font-size:.78rem;color:var(--muted);pointer-events:none}
+.card{display:flex;flex-wrap:wrap;gap:10px 16px}
+.field{flex:1 1 280px;min-width:0}
+.field.small{flex:0 0 110px}
+.flabel{font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:1px}
+.field.small .t{font-variant-numeric:tabular-nums;color:var(--muted)}
+.block.t-row{padding-bottom:20px}
+
+/* marks */
+mark{color:inherit;border-radius:3px;cursor:pointer;padding:0 1px}
+mark.m-sua{background:rgba(var(--c-sua),.32)}
+mark.m-cat{background:rgba(var(--c-cat),.28);text-decoration:line-through}
+mark.m-hoi{background:rgba(var(--c-hoi),.28)}
+mark.m-giu{background:rgba(var(--c-giu),.28)}
+mark.m-khac{background:rgba(var(--c-khac),.32)}
+mark.active{outline:2px solid var(--accent);outline-offset:1px}
+
+/* sidebar comments */
+.ccard{border:1px solid var(--border);border-left-width:4px;border-radius:10px;padding:8px 10px;margin:8px 0;background:var(--surface);cursor:pointer;font-size:.92rem}
+.ccard.active{outline:2px solid var(--accent)}
+.ccard.m-sua{border-left-color:rgb(var(--c-sua))}.ccard.m-cat{border-left-color:rgb(var(--c-cat))}.ccard.m-hoi{border-left-color:rgb(var(--c-hoi))}.ccard.m-giu{border-left-color:rgb(var(--c-giu))}.ccard.m-khac{border-left-color:rgb(var(--c-khac))}
+.chead{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px}
+.tbadge{font-size:.76rem;font-weight:700;padding:0 8px;border-radius:999px;color:#1f2328}
+.tb-sua{background:rgb(var(--c-sua))}.tb-cat{background:rgb(var(--c-cat));color:#fff}.tb-hoi{background:rgb(var(--c-hoi));color:#fff}.tb-giu{background:rgb(var(--c-giu))}.tb-khac{background:rgb(var(--c-khac));color:#fff}
+.loc{color:var(--muted);font-size:.8rem}
+.cquote{color:var(--muted);border-left:2px solid var(--border);padding-left:8px;margin:2px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.cnote{white-space:pre-wrap;overflow-wrap:anywhere}
+.csug{margin-top:4px;padding:4px 8px;border-radius:8px;background:var(--surface2);white-space:pre-wrap;overflow-wrap:anywhere}
+.csug b{font-size:.78rem;color:var(--muted)}
+.cact{display:flex;gap:6px;margin-top:6px}
+.cact button{border:0;background:transparent;color:var(--accent);padding:0;font-size:.85rem}
+.cact button.del{color:var(--danger)}
+.empty{color:var(--muted);font-size:.92rem}
+
+/* popover */
+#pop{position:absolute;z-index:50;width:340px;max-width:calc(100vw - 16px);background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:12px;display:none}
+#pop.open{display:block}
+@media (max-width:700px){#pop{position:fixed;left:8px!important;right:8px;bottom:8px;top:auto!important;width:auto}}
+.types{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
+.types button{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:2px 12px;font-size:.88rem}
+.types button[aria-pressed=true]{background:var(--accent);color:var(--accent-text);border-color:var(--accent);font-weight:600}
+#pquote{font-size:.85rem;color:var(--muted);border-left:2px solid var(--border);padding-left:8px;margin-bottom:8px;max-height:4.6em;overflow:auto;white-space:pre-wrap}
+#pop label{display:block;font-size:.78rem;color:var(--muted);margin:8px 0 2px}
+.prow{display:flex;gap:8px;justify-content:flex-end;margin-top:10px;align-items:center}
+.hint{margin-right:auto;font-size:.75rem;color:var(--muted)}
+
+/* modal, toast, banner */
+#modal{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:16px}
+#modal.open{display:flex}
+.mbox{background:var(--surface);border-radius:14px;max-width:460px;width:100%;padding:18px;box-shadow:var(--shadow)}
+.mbox h3{margin:0 0 8px}
+.mbox ul{margin:8px 0;padding-left:20px}
+.mbox .ov{white-space:pre-wrap;color:var(--muted);font-size:.9rem;max-height:6em;overflow:auto}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:90;background:#222;color:#fff;padding:8px 16px;border-radius:999px;font-size:.9rem;display:none;max-width:90vw}
+#banner{display:none;margin:12px 16px 0;padding:14px 16px;border-radius:12px;background:var(--ok);color:#fff;font-weight:600}
+#banner.err{background:var(--danger)}
+#banner a{color:#fff}
+body.locked .actions,body.locked .cact{display:none}
+body.locked mark{cursor:default}
+</style>
+</head>
+<body>
+<header id="top">
+  <div class="top-row">
+    <span class="title" id="fileName">Đang tải…</span>
+    <span class="pill" id="roundPill"></span>
+    <div class="counters">
+      <span class="pill" id="cCount">0 nhận xét</span>
+      <span class="pill" id="cOk">0 đoạn ổn</span>
+      <span class="pill" id="cUnseen">0 chưa xem</span>
+    </div>
+    <span class="spacer"></span>
+    <div class="seg" role="group" aria-label="Kết luận">
+      <button type="button" id="vOk" aria-pressed="false">Duyệt</button>
+      <button type="button" id="vMore" aria-pressed="true">Cần sửa tiếp</button>
+    </div>
+    <button type="button" class="primary" id="sendBtn">Gửi cho agent</button>
+  </div>
+  <textarea id="overall" rows="1" placeholder="Nhận xét chung về cả bài (tùy chọn)"></textarea>
+</header>
+<div id="banner" role="status"></div>
+<div class="layout">
+  <main>
+    <details id="prev" hidden><summary id="prevSum"></summary><div id="prevBody"></div></details>
+    <div id="script"></div>
+  </main>
+  <aside id="side">
+    <h2>Nhận xét của bạn</h2>
+    <div id="clist"></div>
+    <p class="empty" id="cempty">Chưa có nhận xét. Bôi đen một đoạn chữ trong kịch bản để bắt đầu, hoặc rê chuột vào một đoạn rồi bấm "Nhận xét cả đoạn".</p>
+  </aside>
+</div>
+
+<div id="pop" role="dialog" aria-label="Nhận xét">
+  <div class="types" id="ptypes"></div>
+  <div id="pquote"></div>
+  <label for="pNote">Nhận xét</label>
+  <textarea id="pNote" rows="3" placeholder="Chỗ này cần sửa thế nào, hoặc bạn muốn hỏi gì?"></textarea>
+  <label for="pSug">Đề xuất câu thay thế (tùy chọn)</label>
+  <textarea id="pSug" rows="2" placeholder="Viết lại câu theo ý bạn"></textarea>
+  <div class="prow">
+    <span class="hint">Ctrl/Cmd+Enter để lưu</span>
+    <button type="button" class="ghost" id="pCancel">Hủy</button>
+    <button type="button" class="primary" id="pSave">Lưu</button>
+  </div>
+</div>
+
+<div id="modal"><div class="mbox" role="dialog" aria-modal="true" aria-label="Xác nhận gửi">
+  <h3>Gửi phản hồi cho agent?</h3>
+  <div id="mSummary"></div>
+  <div class="prow"><button type="button" class="ghost" id="mBack">Quay lại</button><button type="button" class="primary" id="mSend">Gửi</button></div>
+</div></div>
+<div id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+
+const TYPES = [
+  {k:'sửa', l:'Sửa', c:'sua'}, {k:'cắt', l:'Cắt', c:'cat'}, {k:'hỏi', l:'Hỏi', c:'hoi'},
+  {k:'giữ', l:'Giữ', c:'giu'}, {k:'khác', l:'Khác', c:'khac'}
+];
+const TCLASS = Object.fromEntries(TYPES.map(t => [t.k, t.c]));
+const STATUS_CLASS = {'đã sửa':'st-da-sua', 'giữ nguyên':'st-giu-nguyen', 'cần bạn quyết':'st-can-ban-quyet'};
+const SMALL_FIELD = /thời gian|âm tiết|time|syllable/i;
+
+const $ = (s, r) => (r || document).querySelector(s);
+
+// Build DOM without innerHTML so script text is never interpreted as markup.
+function h(tag, attrs, ...kids){
+  const e = document.createElement(tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    if (k === 'class') e.className = v;
+    else if (k === 'text') e.textContent = v;
+    else if (k === 'dataset') Object.assign(e.dataset, v);
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v === true ? '' : v);
+  }
+  for (const c of kids.flat()) {
+    if (c == null || c === false) continue;
+    e.append(c);
+  }
+  return e;
+}
+
+let doc = null;
+let S = {comments: [], approved: [], overall: '', verdict: 'sửa tiếp'};
+let submitted = false, nextId = 1, activeId = null, draft = null;
+const blockById = {};
+let toastTimer = null;
+
+/* ---------- persistence ---------- */
+function storageKey(){ return 'script-review:' + doc.file + ':r' + doc.round; }
+function saveLocal(){ try { localStorage.setItem(storageKey(), JSON.stringify(S)); } catch (e) {} }
+function loadLocal(){
+  try {
+    const raw = localStorage.getItem(storageKey());
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    if (!d || !Array.isArray(d.comments)) return;
+    S.comments = d.comments.filter(c => c && blockById[c.block_id] && TCLASS[c.type]);
+    S.approved = (d.approved || []).filter(id => blockById[id]);
+    S.overall = typeof d.overall === 'string' ? d.overall : '';
+    S.verdict = d.verdict === 'duyệt' ? 'duyệt' : 'sửa tiếp';
+  } catch (e) {}
+}
+function clearLocal(){ try { localStorage.removeItem(storageKey()); } catch (e) {} }
+
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg; t.style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3500);
+}
+
+/* ---------- helpers ---------- */
+function fieldText(b, field){
+  if (b.type === 'row' && field) {
+    const c = b.cells.find(x => x.name === field);
+    return c ? c.text : '';
+  }
+  return b.text;
+}
+function blockLabel(b){
+  if (b.type === 'row') return b.cells[0] ? b.cells[0].text.slice(0, 18) : b.id;
+  return b.text.replace(/\s+/g, ' ').slice(0, 24) + (b.text.length > 24 ? '…' : '');
+}
+function isApproved(id){ return S.approved.includes(id); }
+function locate(c, text){
+  if (typeof c.start === 'number' && text.slice(c.start, c.end) === c.quote) return [c.start, c.end];
+  if (c.quote) { const i = text.indexOf(c.quote); if (i >= 0) return [i, i + c.quote.length]; }
+  return null;
+}
+function isWholeRowComment(b, c){ return b.type === 'row' && !c.field; }
+
+/* ---------- rendering the script ---------- */
+function buildText(b, field){
+  const text = fieldText(b, field);
+  const el = h('div', {class:'t', dataset:{bid:b.id, field:field || ''}});
+  const segs = [];
+  for (const c of S.comments) {
+    if (c.block_id !== b.id || (c.field || null) !== (field || null) || isWholeRowComment(b, c)) continue;
+    const r = locate(c, text);
+    if (r) segs.push({s:r[0], e:r[1], id:c.id, type:c.type});
+  }
+  segs.sort((a, z) => a.s - z.s);
+  let pos = 0;
+  for (const g of segs) {
+    const s = Math.max(g.s, pos);
+    if (s >= g.e) continue;
+    if (s > pos) el.append(text.slice(pos, s));
+    el.append(h('mark', {class:'m-' + TCLASS[g.type] + (g.id === activeId ? ' active' : ''), dataset:{cid:g.id}, tabindex:'0', title:g.type}, text.slice(s, g.e)));
+    pos = g.e;
+  }
+  if (pos < text.length) el.append(text.slice(pos));
+  return el;
+}
+
+function buildBlock(b){
+  const ok = isApproved(b.id);
+  const n = S.comments.filter(c => c.block_id === b.id).length;
+  const wrap = h('div', {class:'block t-' + b.type + (n ? ' commented' : '') + (ok ? ' ok' : ''), dataset:{bid:b.id}});
+  wrap.append(h('div', {class:'actions'},
+    h('button', {class:'act' + (ok ? ' on' : ''), type:'button', title:'Đánh dấu đoạn này ổn', onclick:() => toggleOk(b.id)}, '✅ Ổn'),
+    h('button', {class:'act', type:'button', title:'Nhận xét cả đoạn', onclick:ev => openWhole(b.id, ev.currentTarget)}, '💬 Nhận xét cả đoạn')
+  ));
+  if (b.type === 'heading') {
+    wrap.append(h('h' + Math.min(b.level || 2, 6), {class:'hd'}, buildText(b, null)));
+  } else if (b.type === 'li') {
+    const ind = Math.min(Math.floor((b.indent || 0) / 2), 4) * 18;
+    const bullet = /^\d/.test(b.marker || '') ? b.marker : '•';
+    const li = h('div', {class:'li'}, h('span', {class:'bullet'}, bullet), buildText(b, null));
+    if (ind) li.style.marginLeft = ind + 'px';
+    wrap.append(li);
+  } else if (b.type === 'row') {
+    wrap.append(h('div', {class:'card'}, b.cells.map(c =>
+      h('div', {class:'field' + (SMALL_FIELD.test(c.name) ? ' small' : '')},
+        h('div', {class:'flabel'}, c.name), buildText(b, c.name)))));
+  } else {
+    wrap.append(buildText(b, null));
+  }
+  const badges = h('div', {class:'badges'});
+  if (n) badges.append(h('span', {}, '💬 ' + n));
+  if (ok) badges.append(h('span', {}, '✅ ổn'));
+  if (n || ok) wrap.append(badges);
+  return wrap;
+}
+
+function refreshBlock(id){
+  const old = $('.block[data-bid="' + id + '"]');
+  const b = blockById[id];
+  if (old && b) old.replaceWith(buildBlock(b));
+}
+
+function renderScript(){
+  const root = $('#script');
+  root.replaceChildren(...doc.blocks.map(buildBlock));
+}
+
+/* ---------- sidebar ---------- */
+function sortedComments(){
+  const order = Object.fromEntries(doc.blocks.map((b, i) => [b.id, i]));
+  return S.comments.slice().sort((a, z) => (order[a.block_id] - order[z.block_id]) || ((a.start || 0) - (z.start || 0)));
+}
+
+function renderSidebar(){
+  const list = $('#clist');
+  const cs = sortedComments();
+  $('#cempty').style.display = cs.length ? 'none' : '';
+  list.replaceChildren(...cs.map(c => {
+    const b = blockById[c.block_id];
+    const loc = blockLabel(b) + (c.field ? ' · ' + c.field : '');
+    const card = h('div', {class:'ccard m-' + TCLASS[c.type] + (c.id === activeId ? ' active' : ''), dataset:{cid:c.id}, onclick:() => focusComment(c.id, 'main')},
+      h('div', {class:'chead'}, h('span', {class:'tbadge tb-' + TCLASS[c.type]}, c.type), h('span', {class:'loc'}, loc)),
+      c.quote ? h('div', {class:'cquote'}, c.quote.length > 160 ? c.quote.slice(0, 160) + '…' : c.quote) : null,
+      c.note ? h('div', {class:'cnote'}, c.note) : null,
+      c.suggestion ? h('div', {class:'csug'}, h('b', {}, 'ĐỀ XUẤT '), c.suggestion) : null,
+      h('div', {class:'cact'},
+        h('button', {type:'button', onclick:ev => { ev.stopPropagation(); editComment(c.id); }}, 'Sửa'),
+        h('button', {type:'button', class:'del', onclick:ev => { ev.stopPropagation(); deleteComment(c.id); }}, 'Xóa'))
+    );
+    return card;
+  }));
+}
+
+function updateCounters(){
+  const commented = new Set(S.comments.map(c => c.block_id));
+  const reviewable = doc.blocks.filter(b => b.type !== 'heading');
+  const unseen = reviewable.filter(b => !commented.has(b.id) && !isApproved(b.id)).length;
+  $('#cCount').textContent = S.comments.length + ' nhận xét';
+  $('#cOk').textContent = S.approved.length + ' đoạn ổn';
+  $('#cUnseen').textContent = unseen + ' chưa xem';
+  $('#vOk').setAttribute('aria-pressed', String(S.verdict === 'duyệt'));
+  $('#vMore').setAttribute('aria-pressed', String(S.verdict === 'sửa tiếp'));
+}
+
+function refreshAll(blockIds){
+  for (const id of new Set(blockIds)) refreshBlock(id);
+  renderSidebar(); updateCounters(); saveLocal();
+}
+
+/* ---------- comment focus ---------- */
+function focusComment(id, scrollTarget){
+  const oldId = activeId;
+  activeId = id;
+  const c = S.comments.find(x => x.id === id);
+  if (!c) return;
+  const touch = [c.block_id];
+  if (oldId) { const o = S.comments.find(x => x.id === oldId); if (o) touch.push(o.block_id); }
+  for (const bid of new Set(touch)) refreshBlock(bid);
+  renderSidebar();
+  if (scrollTarget === 'main') {
+    const el = $('mark[data-cid="' + id + '"]') || $('.block[data-bid="' + c.block_id + '"]');
+    if (el) el.scrollIntoView({block:'center', behavior:'smooth'});
+  } else {
+    const card = $('.ccard[data-cid="' + id + '"]');
+    if (card) card.scrollIntoView({block:'nearest', behavior:'smooth'});
+  }
+}
+
+/* ---------- popover ---------- */
+function renderTypeButtons(){
+  const box = $('#ptypes');
+  box.replaceChildren(...TYPES.map(t => h('button', {type:'button', 'aria-pressed':String(draft && draft.type === t.k), onclick:() => { draft.type = t.k; renderTypeButtons(); }}, t.l)));
+}
+
+function openPopover(d, anchor){
+  if (submitted) return;
+  draft = d;
+  renderTypeButtons();
+  $('#pquote').textContent = d.quote.length > 400 ? d.quote.slice(0, 400) + '…' : d.quote;
+  $('#pNote').value = d.note || '';
+  $('#pSug').value = d.suggestion || '';
+  const pop = $('#pop');
+  pop.classList.add('open');
+  const rect = anchor.getBoundingClientRect();
+  const w = pop.offsetWidth, ph = pop.offsetHeight;
+  const sx = window.scrollX, sy = window.scrollY;
+  let left = Math.min(Math.max(rect.left, 8), window.innerWidth - w - 8);
+  let top = rect.bottom + 8;
+  if (top + ph > window.innerHeight - 8) top = Math.max(8, rect.top - ph - 8);
+  pop.style.left = (left + sx) + 'px';
+  pop.style.top = (top + sy) + 'px';
+  setTimeout(() => $('#pNote').focus({preventScroll:true}), 0);
+}
+
+function closePopover(){
+  $('#pop').classList.remove('open');
+  draft = null;
+}
+
+function saveDraftComment(){
+  if (!draft || submitted) return;
+  const note = $('#pNote').value.trim();
+  const sug = $('#pSug').value.trim();
+  if (!note && !sug && draft.type !== 'cắt' && draft.type !== 'giữ') {
+    toast('Hãy nhập nhận xét hoặc đề xuất câu thay thế.');
+    $('#pNote').focus();
+    return;
+  }
+  let id = draft.id;
+  if (id) {
+    const c = S.comments.find(x => x.id === id);
+    if (c) { c.type = draft.type; c.note = note; c.suggestion = sug; }
+  } else {
+    id = 'c' + (nextId++);
+    S.comments.push({
+      id, block_id: draft.block_id, field: draft.field, quote: draft.quote, start: draft.start, end: draft.end,
+      context_before: draft.context_before, context_after: draft.context_after,
+      type: draft.type, note, suggestion: sug, created_at: new Date().toISOString()
+    });
+  }
+  const bid = draft.block_id;
+  closePopover();
+  try { window.getSelection().removeAllRanges(); } catch (e) {}
+  refreshAll([bid]);
+}
+
+function newDraft(b, field, start, end, text){
+  return {
+    block_id: b.id, field: field || null, quote: text.slice(start, end), start, end,
+    context_before: text.slice(Math.max(0, start - 40), start), context_after: text.slice(end, end + 40),
+    type: 'sửa', note: '', suggestion: ''
+  };
+}
+
+function openWhole(bid, btn){
+  if (submitted) return;
+  const b = blockById[bid];
+  const text = b.type === 'row' ? b.text : fieldText(b, null);
+  openPopover(newDraft(b, null, 0, text.length, text), btn);
+}
+
+function editComment(id){
+  const c = S.comments.find(x => x.id === id);
+  if (!c || submitted) return;
+  const el = $('mark[data-cid="' + id + '"]') || $('.block[data-bid="' + c.block_id + '"]') || $('#clist');
+  el.scrollIntoView({block:'center'});
+  openPopover(Object.assign({}, c), el);
+}
+
+function deleteComment(id){
+  if (submitted) return;
+  const c = S.comments.find(x => x.id === id);
+  if (!c || !window.confirm('Xóa nhận xét này?')) return;
+  S.comments = S.comments.filter(x => x.id !== id);
+  if (activeId === id) activeId = null;
+  refreshAll([c.block_id]);
+}
+
+function toggleOk(bid){
+  if (submitted) return;
+  const i = S.approved.indexOf(bid);
+  if (i >= 0) S.approved.splice(i, 1); else S.approved.push(bid);
+  refreshAll([bid]);
+}
+
+/* ---------- selection ---------- */
+function closestT(node){
+  if (!node) return null;
+  const el = node.nodeType === 1 ? node : node.parentElement;
+  return el ? el.closest('.t') : null;
+}
+
+function handleSelection(){
+  if (submitted) return;
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || sel.rangeCount === 0) return;
+  let range = sel.getRangeAt(0);
+  if (!sel.toString().trim()) return;
+  const a = closestT(range.startContainer);
+  let b = closestT(range.endContainer);
+  if (!a) { return; }
+  if (a !== b) {
+    // Triple-click often ends at offset 0 of the next block; clamp if that adds no visible text.
+    const clamped = range.cloneRange();
+    clamped.setEnd(a, a.childNodes.length);
+    if (clamped.toString().trim() === range.toString().trim()) { range = clamped; b = a; }
+    else { toast('Lựa chọn trải qua nhiều đoạn. Hãy bôi đen trong một đoạn (hoặc một ô) duy nhất.'); return; }
+  }
+  const pre = document.createRange();
+  pre.selectNodeContents(a);
+  pre.setEnd(range.startContainer, range.startOffset);
+  let start = pre.toString().length;
+  const raw = range.toString();
+  const lead = raw.length - raw.trimStart().length;
+  const q = raw.trim();
+  if (!q) return;
+  start += lead;
+  const text = a.textContent;
+  let end = start + q.length;
+  if (text.slice(start, end) !== q) {
+    const i = text.indexOf(q);
+    if (i < 0) return;
+    start = i; end = i + q.length;
+  }
+  const blk = blockById[a.dataset.bid];
+  openPopover(newDraft(blk, a.dataset.field || null, start, end, text), range);
+}
+
+/* ---------- previous round ---------- */
+function renderPrevious(){
+  const p = doc.previous;
+  if (!p) return;
+  const counts = {};
+  p.comments.forEach(c => { const s = c.response && c.response.status; if (s) counts[s] = (counts[s] || 0) + 1; });
+  const sum = Object.entries(counts).map(([k, v]) => v + ' ' + k).join(' · ');
+  $('#prevSum').textContent = 'Vòng trước (vòng ' + p.round + '): ' + p.comments.length + ' nhận xét' + (sum ? ' · ' + sum : '');
+  const body = $('#prevBody');
+  const items = [];
+  if (p.overall) items.push(h('div', {class:'prev-item'}, h('b', {}, 'Nhận xét chung: '), p.overall));
+  for (const c of p.comments) {
+    const r = c.response;
+    items.push(h('div', {class:'prev-item'},
+      h('div', {class:'chead'}, h('span', {class:'tbadge tb-' + (TCLASS[c.type] || 'khac')}, c.type), h('span', {class:'loc'}, (c.field ? c.field + ' · ' : '') + c.id)),
+      c.quote ? h('div', {class:'cquote'}, c.quote) : null,
+      c.note ? h('div', {class:'cnote'}, c.note) : null,
+      c.suggestion ? h('div', {class:'csug'}, h('b', {}, 'ĐỀ XUẤT '), c.suggestion) : null,
+      r ? h('div', {class:'resp'}, h('span', {class:'st ' + (STATUS_CLASS[r.status] || 'st-giu-nguyen')}, r.status), r.note || '') : h('div', {class:'resp'}, 'Agent chưa trả lời nhận xét này.')
+    ));
+  }
+  body.replaceChildren(...items);
+  $('#prev').hidden = false;
+}
+
+/* ---------- submit ---------- */
+function buildPayload(){
+  const order = Object.fromEntries(doc.blocks.map((b, i) => [b.id, i]));
+  return {
+    overall: S.overall.trim(),
+    verdict: S.verdict,
+    approved_blocks: S.approved.slice().sort((a, z) => order[a] - order[z]),
+    comments: sortedComments()
+  };
+}
+
+function openConfirm(){
+  if (submitted) return;
+  const byType = {};
+  S.comments.forEach(c => { byType[c.type] = (byType[c.type] || 0) + 1; });
+  const commented = new Set(S.comments.map(c => c.block_id));
+  const unseen = doc.blocks.filter(b => b.type !== 'heading' && !commented.has(b.id) && !isApproved(b.id)).length;
+  const types = Object.entries(byType).map(([k, v]) => v + ' ' + k).join(', ');
+  const box = $('#mSummary');
+  box.replaceChildren(
+    h('ul', {},
+      h('li', {}, S.comments.length + ' nhận xét' + (types ? ' (' + types + ')' : '')),
+      h('li', {}, S.approved.length + ' đoạn đánh dấu ổn'),
+      h('li', {}, unseen + ' đoạn chưa xem (agent sẽ coi là không có ý kiến)'),
+      h('li', {}, 'Kết luận: ', h('b', {}, S.verdict === 'duyệt' ? 'Duyệt' : 'Cần sửa tiếp'))),
+    S.overall.trim() ? h('div', {class:'ov'}, S.overall.trim()) : null
+  );
+  $('#modal').classList.add('open');
+  $('#mSend').focus();
+}
+
+async function send(){
+  const btn = $('#mSend');
+  btn.disabled = true;
+  const payload = buildPayload();
+  try {
+    const res = await fetch('/api/feedback', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+    submitted = true;
+    clearLocal();
+    $('#modal').classList.remove('open');
+    closePopover();
+    document.body.classList.add('locked');
+    ['overall', 'sendBtn', 'vOk', 'vMore'].forEach(id => { $('#' + id).disabled = true; });
+    const bn = $('#banner');
+    bn.className = ''; bn.style.display = 'block';
+    bn.textContent = 'Đã gửi, bạn có thể quay lại Claude Code. Trang này không còn nhận chỉnh sửa.';
+  } catch (e) {
+    $('#modal').classList.remove('open');
+    const bn = $('#banner');
+    bn.className = 'err'; bn.style.display = 'block';
+    bn.replaceChildren('Không gửi được (' + e.message + '). Bản nháp vẫn được lưu trong trình duyệt. ',
+      h('a', {href:'#', onclick:ev => { ev.preventDefault(); downloadPayload(payload); }}, 'Tải file phản hồi'),
+      ' để đưa cho agent nếu máy chủ review đã đóng.');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function downloadPayload(payload){
+  const full = Object.assign({file: doc.file, round: doc.round, submitted_at: new Date().toISOString()}, payload);
+  const url = URL.createObjectURL(new Blob([JSON.stringify(full, null, 2)], {type:'application/json'}));
+  const a = h('a', {href:url, download: doc.file.replace(/\.md$/i, '') + '.review-r' + doc.round + '.json'});
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+/* ---------- init ---------- */
+function bind(){
+  $('#script').addEventListener('mouseup', ev => {
+    if (ev.target.closest('.actions')) return;
+    setTimeout(handleSelection, 0);
+  });
+  $('#script').addEventListener('click', ev => {
+    const m = ev.target.closest('mark[data-cid]');
+    if (!m) return;
+    if (window.getSelection().toString().trim()) return;
+    focusComment(m.dataset.cid, 'side');
+  });
+  $('#script').addEventListener('keydown', ev => {
+    const m = ev.target.closest && ev.target.closest('mark[data-cid]');
+    if (m && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); focusComment(m.dataset.cid, 'side'); }
+  });
+  $('#pSave').addEventListener('click', saveDraftComment);
+  $('#pCancel').addEventListener('click', closePopover);
+  $('#pop').addEventListener('keydown', ev => {
+    if ((ev.ctrlKey || ev.metaKey) && ev.key === 'Enter') { ev.preventDefault(); saveDraftComment(); }
+  });
+  document.addEventListener('keydown', ev => {
+    if (ev.key === 'Escape') { closePopover(); $('#modal').classList.remove('open'); }
+  });
+  $('#overall').addEventListener('input', ev => { S.overall = ev.target.value; saveLocal(); });
+  $('#vOk').addEventListener('click', () => { S.verdict = 'duyệt'; updateCounters(); saveLocal(); });
+  $('#vMore').addEventListener('click', () => { S.verdict = 'sửa tiếp'; updateCounters(); saveLocal(); });
+  $('#sendBtn').addEventListener('click', openConfirm);
+  $('#mBack').addEventListener('click', () => $('#modal').classList.remove('open'));
+  $('#mSend').addEventListener('click', send);
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(() => document.documentElement.style.setProperty('--hh', $('#top').offsetHeight + 'px')).observe($('#top'));
+  }
+}
+
+async function init(){
+  try {
+    const res = await fetch('/api/doc');
+    doc = await res.json();
+  } catch (e) {
+    $('#fileName').textContent = 'Không tải được kịch bản';
+    return;
+  }
+  doc.blocks.forEach(b => { blockById[b.id] = b; });
+  document.title = 'Review · ' + doc.file;
+  $('#fileName').textContent = doc.file;
+  $('#roundPill').textContent = 'Vòng ' + doc.round;
+  loadLocal();
+  nextId = S.comments.reduce((m, c) => Math.max(m, parseInt(String(c.id).replace(/\D/g, ''), 10) || 0), 0) + 1;
+  $('#overall').value = S.overall;
+  bind();
+  renderPrevious();
+  renderScript();
+  renderSidebar();
+  updateCounters();
+}
+
+init();
+})();
+</script>
+</body>
+</html>

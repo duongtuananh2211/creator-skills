@@ -123,7 +123,7 @@ Trình bày trong chat theo thứ tự này:
 **Cần bổ sung:** <liệt kê các [cần bổ sung: …] còn trong bài, hoặc "Không có">
 ```
 
-Các câu mở đầu thay thế phải khác góc nhau, không chỉ đổi vài chữ, và cũng phải đúng sự thật như bài chính. Cuối cùng, nhắc ngắn hai bước tiếp theo nếu phù hợp: cần thêm nhiều phương án hook, tiêu đề hoặc chữ trên thumbnail thì dùng `story-hook-writer` (nếu đã cài); muốn chấm điểm và nhận góp ý theo mức độ thì dùng `story-content-review` (nếu đã cài). Nếu người dùng muốn lưu, đề nghị ghi bài ra một file trong dự án của họ.
+Các câu mở đầu thay thế phải khác góc nhau, không chỉ đổi vài chữ, và cũng phải đúng sự thật như bài chính. Cuối cùng, nhắc ngắn hai bước tiếp theo nếu phù hợp: cần thêm nhiều phương án hook, tiêu đề hoặc chữ trên thumbnail thì dùng `story-hook-writer` (nếu đã cài); muốn chấm điểm và nhận góp ý theo mức độ thì dùng `story-content-review` (nếu đã cài). Với video, người dùng thường muốn tự duyệt từng đoạn: gợi ý `script-review` (nếu đã cài) để mở trang HTML cho họ bôi đen, nhận xét từng câu rồi gửi phản hồi lại. Nếu người dùng muốn lưu, đề nghị ghi bài ra một file trong dự án của họ.
 
 ## Khi người dùng sửa hoặc phản hồi
 

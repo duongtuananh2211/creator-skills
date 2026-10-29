@@ -10,6 +10,7 @@ Bộ agent skill cho Claude Code phục vụ công việc sáng tạo nội dung
 | [`story-content-writer`](skills/story-content-writer/SKILL.md) | Biến chuyện thật của bạn thành kịch bản video ngắn, kịch bản YouTube dài, bài viết hoặc carousel kể chuyện. |
 | [`story-hook-writer`](skills/story-hook-writer/SKILL.md) | Viết 8–10 phương án câu mở đầu, tiêu đề, chữ thumbnail, có gắn nhãn loại và lọc giật tít, mồi tương tác. |
 | [`story-content-review`](skills/story-content-review/SKILL.md) | Chấm bản nháp theo 10 tiêu chí kể chuyện và kiểm tra riêng từng định dạng, trả về sửa đổi theo mức độ ưu tiên. |
+| [`script-review`](skills/script-review/SKILL.md) | Mở trang HTML cục bộ để bạn bôi đen, nhận xét, đề xuất câu thay thế cho từng đoạn kịch bản rồi gửi phản hồi về agent sửa theo vòng. |
 | [`story-voice-script`](skills/story-voice-script/SKILL.md) | Chuyển kịch bản thành lời đọc dán thẳng vào ElevenLabs hoặc Vbee, theo giọng điệu chọn (vui vẻ, tâm sự, hồi hộp…). |
 
 ## Cài đặt bằng npx
@@ -49,7 +50,7 @@ ln -s "$PWD/creator-skills/skills/google-flow-image-generation" ~/.claude/skills
 Cài cả bộ skill kể chuyện (kèm `channel-profile` và `trending-topic-finder`) một lần. `trending-topic-finder` cần Python 3 để chạy script lấy dữ liệu xu hướng.
 
 ```bash
-npx skills add duongtuananh2211/creator-skills --skill channel-profile trending-topic-finder story-content-writer story-hook-writer story-content-review story-voice-script --agent claude-code
+npx skills add duongtuananh2211/creator-skills --skill channel-profile trending-topic-finder story-content-writer story-hook-writer story-content-review script-review story-voice-script --agent claude-code
 ```
 
 ## Bộ skill kể chuyện cho mạng xã hội
@@ -80,6 +81,16 @@ Khi mở một dự án kênh mới, chạy `channel-profile` trước (ví dụ
 Bốn skill `story-*` tự đọc file này trước mỗi lượt để bám đúng khán giả, xưng hô, giọng nhân vật, định dạng và giọng đọc AI của kênh. Muốn đổi gì (ví dụ đổi giọng AI sang Vbee), chỉ cần nhờ `channel-profile` cập nhật hồ sơ; skill chỉ sửa mục liên quan và ghi vào nhật ký thay đổi.
 
 Lưu ý: hồ sơ không giữ đúng tên mục thì các skill khác sẽ không tìm thấy thông tin. Bạn sửa tay thoải mái, miễn giữ nguyên 10 tiêu đề đánh số.
+
+### Tự duyệt kịch bản: `script-review`
+
+Sau khi có kịch bản, nói "Mở trang review kịch bản này". Agent ghi kịch bản ra file, chạy `scripts/review_server.py` (chỉ dùng thư viện chuẩn Python, chỉ nghe ở `127.0.0.1`) và mở trang review trên trình duyệt:
+
+- Bôi đen một câu hoặc một ô trong bảng kịch bản, chọn loại nhận xét (Sửa, Cắt, Hỏi, Giữ, Khác), ghi nhận xét và câu đề xuất nếu có.
+- Bấm ✅ cho đoạn đã ổn để agent không đụng vào; thêm nhận xét chung và chọn Duyệt hoặc Cần sửa tiếp.
+- Bấm "Gửi cho agent": phản hồi được lưu thành `<tên>.review-r1.json` và `.md` cạnh kịch bản, máy chủ tự tắt và agent bắt đầu sửa ngay.
+
+Agent xử lý từng nhận xét, lưu bản mới thành `<tên>.v2.md` (giữ bản cũ), ghi lời đáp cho từng nhận xét, rồi mở vòng sau nếu bạn chọn "Cần sửa tiếp". Ở vòng sau, trang hiện các nhận xét cũ kèm lời đáp của agent. Bản nháp nhận xét chưa gửi được lưu trong trình duyệt nếu bạn lỡ tải lại trang.
 
 ### Tìm chủ đề hot: `trending-topic-finder`
 
