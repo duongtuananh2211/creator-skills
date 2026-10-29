@@ -21,6 +21,17 @@ Skill này đọc bản nháp của một creator đang kể chuyện của chí
 - **Mỗi nhận xét phải trỏ vào chữ trong bản nháp.** Trích nguyên văn rồi mới góp ý. Nhận xét chung chung kiểu "cần cuốn hơn" không giúp ai sửa được gì.
 - **Ít mà trúng.** Một bản nháp có hai mươi lỗi nhỏ thường chỉ có hai, ba lỗi thật sự quyết định. Nêu những lỗi đó trước, phần còn lại gom gọn hoặc bỏ.
 
+## Hồ sơ kênh (nếu có)
+
+Trước bước 1, kiểm tra file `channel-profile.md` ở thư mục gốc dự án (thư mục mở Claude Code). File này do skill `channel-profile` tạo và là nguồn đúng nhất về kênh của người dùng. Nếu có, đọc nó trước và dùng như sau:
+
+- **Khán giả** (mục 3): tiêu chí "liên quan đến người xem" chấm theo khán giả trong hồ sơ.
+- **Người dẫn / nhân vật đại diện** (mục 4) và **giọng văn** (mục 7): thêm một kiểm tra "đúng giọng kênh"; chỗ lệch xưng hô hoặc tính cách được ghi ở mức 🟡 Câu chữ, lệch nặng thì 🟠.
+- **Định dạng** (mục 6): độ dài và khung cố định của kênh là chuẩn để chấm nhịp và độ dài.
+- **Quy tắc nội dung** (mục 8): vi phạm quy tắc kênh (thiếu nguồn, chủ đề nhạy cảm xử lý sai) được gắn cờ như lằn ranh đỏ nếu hồ sơ ghi là bắt buộc.
+
+Những gì hồ sơ đã trả lời thì đừng hỏi lại. Nếu yêu cầu của người dùng trong lượt này khác hồ sơ (ví dụ đổi xưng hô cho một video), làm theo yêu cầu hiện tại và nhắc một dòng rằng nó khác hồ sơ. Nếu không có file, làm như bình thường; có thể nhắc một lần rằng `channel-profile` (nếu đã cài) giúp các lần sau không phải khai lại.
+
 ## Quy trình
 
 ### 1. Nắm bối cảnh

@@ -21,6 +21,17 @@ Các file trong `references/` nằm cạnh file SKILL.md này. Chỉ đọc file
 
 Khi người dùng muốn chuyển một câu chuyện sang định dạng khác, đọc file của định dạng mới và viết lại theo khuôn của nó. Chép nguyên văn từ định dạng này sang định dạng kia hầu như luôn hỏng nhịp.
 
+## Hồ sơ kênh (nếu có)
+
+Trước bước 1, kiểm tra file `channel-profile.md` ở thư mục gốc dự án (thư mục mở Claude Code). File này do skill `channel-profile` tạo và là nguồn đúng nhất về kênh của người dùng. Nếu có, đọc nó trước và dùng như sau:
+
+- **Khán giả** (mục 3) và **trụ cột nội dung** (mục 5): dùng để chọn góc kể và bài học hợp người xem.
+- **Người dẫn / nhân vật đại diện** (mục 4) và **giọng văn** (mục 7): xưng hô, tính cách, câu cửa miệng, những điều người dẫn không bao giờ nói.
+- **Định dạng** (mục 6): độ dài mặc định, khung kịch bản cố định của kênh nếu có.
+- **Quy tắc nội dung** (mục 8): quy tắc về nguồn, ví dụ giả định, chủ đề nhạy cảm. Quy tắc này cộng thêm vào nguyên tắc không bịa của skill, không thay thế nó.
+
+Những gì hồ sơ đã trả lời thì đừng hỏi lại. Nếu yêu cầu của người dùng trong lượt này khác hồ sơ (ví dụ đổi xưng hô cho một video), làm theo yêu cầu hiện tại và nhắc một dòng rằng nó khác hồ sơ. Nếu không có file, làm như bình thường; có thể nhắc một lần rằng `channel-profile` (nếu đã cài) giúp các lần sau không phải khai lại.
+
 ## Quy trình
 
 ### 1. Gom đầu vào

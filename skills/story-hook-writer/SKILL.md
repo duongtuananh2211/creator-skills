@@ -1,6 +1,6 @@
 ---
 name: story-hook-writer
-description: Viết và sàng lọc phần mở đầu cho nội dung kể chuyện thương hiệu cá nhân: câu nói, chữ trên màn hình và hình ảnh 1–3 giây đầu cho video ngắn (TikTok, Reels, Shorts); combo tiêu đề + chữ thumbnail + 30 giây mở đầu cho YouTube; dòng đầu trước "Xem thêm" cho bài viết (Facebook, Threads, LinkedIn, X); slide bìa cho carousel. Tạo 8–10 phương án thuộc nhiều loại câu móc (hook) có gắn nhãn, kiểm tra từng cái về sự thật, khả năng trả lời hứa, mồi tương tác và mức cảm xúc, rồi đề xuất 2–3 phương án nên dùng hoặc A/B test. Dùng khi người dùng nói "viết hook", "câu mở đầu cho video này", "đặt tiêu đề YouTube", "chữ trên thumbnail", "dòng đầu bài Facebook", "slide bìa carousel", "hook này có giật tít không", "write hooks", "title ideas", kể cả khi họ chỉ dán bản nháp và hỏi nên mở đầu thế nào. Không dùng để viết cả bài hay kịch bản (dùng `story-content-writer`) hoặc chấm toàn bộ bản nháp (dùng `story-content-review`).
+description: Viết và sàng lọc phần mở đầu cho nội dung kể chuyện thương hiệu cá nhân, gồm câu nói, chữ trên màn hình và hình ảnh 1–3 giây đầu cho video ngắn (TikTok, Reels, Shorts); combo tiêu đề + chữ thumbnail + 30 giây mở đầu cho YouTube; dòng đầu trước "Xem thêm" cho bài viết (Facebook, Threads, LinkedIn, X); slide bìa cho carousel. Tạo 8–10 phương án thuộc nhiều loại câu móc (hook) có gắn nhãn, kiểm tra từng cái về sự thật, khả năng trả lời hứa, mồi tương tác và mức cảm xúc, rồi đề xuất 2–3 phương án nên dùng hoặc A/B test. Dùng khi người dùng nói "viết hook", "câu mở đầu cho video này", "đặt tiêu đề YouTube", "chữ trên thumbnail", "dòng đầu bài Facebook", "slide bìa carousel", "hook này có giật tít không", "write hooks", "title ideas", kể cả khi họ chỉ dán bản nháp và hỏi nên mở đầu thế nào. Không dùng để viết cả bài hay kịch bản (dùng `story-content-writer`) hoặc chấm toàn bộ bản nháp (dùng `story-content-review`).
 ---
 
 # Story hook writer
@@ -17,6 +17,17 @@ Cũng nên khiêm tốn về khả năng dự đoán. Trên hàng chục nghìn 
 - `references/titles-thumbnails.md`: đọc khi định dạng là YouTube dài (tiêu đề, thumbnail, 30 giây đầu, Test & Compare), bài viết (ngưỡng "Xem thêm" của từng nền tảng) hoặc carousel (slide bìa, slide 2).
 - `references/policy-redflags.md`: đọc khi sàng lọc ở bước 3, và khi người dùng hỏi một câu móc có "giật tít" hay vi phạm chính sách không. File này có các mẫu câu đỏ bằng tiếng Việt kèm cách viết lại.
 - `references/evidence.md`: đọc khi cần giải thích vì sao chọn phương án nào, khi người dùng hỏi "có nghiên cứu nào không", hoặc khi họ đưa ra một con số kiểu "3 giây đầu quyết định 71%" mà mình cần đánh giá.
+
+## Hồ sơ kênh (nếu có)
+
+Trước bước 1, kiểm tra file `channel-profile.md` ở thư mục gốc dự án (thư mục mở Claude Code). File này do skill `channel-profile` tạo và là nguồn đúng nhất về kênh của người dùng. Nếu có, đọc nó trước và dùng như sau:
+
+- **Khán giả** (mục 3): họ đã biết gì, đang thắc mắc gì, để đặt khoảng trống tò mò đúng chỗ.
+- **Người dẫn / nhân vật đại diện** (mục 4) và **giọng văn** (mục 7): câu móc phải nghe như chính người dẫn nói, đúng xưng hô.
+- **Định dạng** (mục 6) và **đối thủ, khoảng trống** (mục 9): tránh trùng kiểu tiêu đề của kênh khác, khai thác góc mà hồ sơ ghi là khác biệt.
+- **Quy tắc nội dung** (mục 8): những gì không được hứa hay phóng đại với chủ đề của kênh.
+
+Những gì hồ sơ đã trả lời thì đừng hỏi lại. Nếu yêu cầu của người dùng trong lượt này khác hồ sơ (ví dụ đổi xưng hô cho một video), làm theo yêu cầu hiện tại và nhắc một dòng rằng nó khác hồ sơ. Nếu không có file, làm như bình thường; có thể nhắc một lần rằng `channel-profile` (nếu đã cài) giúp các lần sau không phải khai lại.
 
 ## Quy trình
 

@@ -22,6 +22,16 @@ Các file trong `references/` nằm cạnh file SKILL.md này. Chỉ đọc file
 
 Thông tin về công cụ được nghiên cứu ngày 29/10/2026. Hai hãng đổi tính năng thường xuyên (ElevenLabs vừa ra v4 cuối tháng 9/2026), nên khi người dùng thấy giao diện khác mô tả, tin vào thứ họ đang thấy và điều chỉnh theo.
 
+## Hồ sơ kênh (nếu có)
+
+Trước bước 1, kiểm tra file `channel-profile.md` ở thư mục gốc dự án (thư mục mở Claude Code). File này do skill `channel-profile` tạo và là nguồn đúng nhất về kênh của người dùng. Nếu có, đọc nó trước và dùng như sau:
+
+- **Người dẫn / nhân vật đại diện** (mục 4): giọng đọc AI đã chọn cho kênh (công cụ, model, tên giọng, cài đặt) và giọng điệu mặc định. Dùng làm mặc định thay vì hỏi.
+- **Giọng văn** (mục 7): xưng hô, tiểu từ nói hay dùng, từ cần tránh.
+- **Bảng cách đọc** trong hồ sơ, nếu có: áp dụng luôn và chỉ bổ sung từ mới vào bảng của lượt này.
+
+Những gì hồ sơ đã trả lời thì đừng hỏi lại. Nếu yêu cầu của người dùng trong lượt này khác hồ sơ (ví dụ đổi xưng hô cho một video), làm theo yêu cầu hiện tại và nhắc một dòng rằng nó khác hồ sơ. Nếu không có file, làm như bình thường; có thể nhắc một lần rằng `channel-profile` (nếu đã cài) giúp các lần sau không phải khai lại.
+
 ## Quy trình
 
 ### 1. Gom đầu vào

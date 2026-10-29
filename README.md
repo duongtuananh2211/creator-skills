@@ -5,6 +5,7 @@ Bộ agent skill cho Claude Code phục vụ công việc sáng tạo nội dung
 | Skill | Mô tả |
 | --- | --- |
 | [`google-flow-image-generation`](skills/google-flow-image-generation/SKILL.md) | Tạo ảnh bằng Google Flow qua Claude in Chrome, tải ảnh về và chuyển vào thư mục dự án. |
+| [`channel-profile`](skills/channel-profile/SKILL.md) | Dựng hồ sơ kênh khi khởi tạo dự án: niche, định vị, khán giả, người dẫn hoặc nhân vật đại diện, trụ cột nội dung, quy tắc; tuỳ chọn tra kênh cùng chủ đề trên web. |
 | [`story-content-writer`](skills/story-content-writer/SKILL.md) | Biến chuyện thật của bạn thành kịch bản video ngắn, kịch bản YouTube dài, bài viết hoặc carousel kể chuyện. |
 | [`story-hook-writer`](skills/story-hook-writer/SKILL.md) | Viết 8–10 phương án câu mở đầu, tiêu đề, chữ thumbnail, có gắn nhãn loại và lọc giật tít, mồi tương tác. |
 | [`story-content-review`](skills/story-content-review/SKILL.md) | Chấm bản nháp theo 10 tiêu chí kể chuyện và kiểm tra riêng từng định dạng, trả về sửa đổi theo mức độ ưu tiên. |
@@ -44,10 +45,10 @@ git clone https://github.com/duongtuananh2211/creator-skills.git
 ln -s "$PWD/creator-skills/skills/google-flow-image-generation" ~/.claude/skills/
 ```
 
-Cài cả bốn skill kể chuyện một lần:
+Cài cả bộ skill kể chuyện (kèm `channel-profile`) một lần:
 
 ```bash
-npx skills add duongtuananh2211/creator-skills --skill story-content-writer story-hook-writer story-content-review story-voice-script --agent claude-code
+npx skills add duongtuananh2211/creator-skills --skill channel-profile story-content-writer story-hook-writer story-content-review story-voice-script --agent claude-code
 ```
 
 ## Bộ skill kể chuyện cho mạng xã hội
@@ -68,6 +69,16 @@ Nguyên tắc chung của cả bộ:
 - **Phân biệt bằng chứng.** Hướng dẫn chính thức của nền tảng được dẫn nguồn. Mẹo của người làm nghề và các con số ước lượng (như ngưỡng "Xem thêm", tốc độ nói 4,5–5,5 âm tiết/giây) được ghi rõ là ước lượng.
 
 Kiến thức chi tiết của từng skill nằm trong thư mục `references/` của skill đó và chỉ được đọc khi cần.
+
+### Hồ sơ kênh: bắt đầu từ `channel-profile`
+
+Khi mở một dự án kênh mới, chạy `channel-profile` trước (ví dụ: "Tạo hồ sơ kênh: kênh YouTube, nhân vật Xa hình con rắn, giải thích vì sao người ta nghiện cờ bạc"). Skill phỏng vấn theo từng vòng ngắn, đề xuất 2–3 hướng niche và định vị, hỏi bạn có muốn tra các kênh cùng chủ đề trên web không, rồi ghi file `channel-profile.md` ở thư mục gốc dự án với 10 mục cố định:
+
+1. Định vị · 2. Niche và góc nhìn · 3. Khán giả · 4. Người dẫn / nhân vật đại diện · 5. Trụ cột nội dung · 6. Định dạng và nhịp đăng · 7. Giọng văn và ngôn ngữ · 8. Quy tắc nội dung · 9. Đối thủ và khoảng trống · 10. Mục tiêu và chỉ số
+
+Bốn skill `story-*` tự đọc file này trước mỗi lượt để bám đúng khán giả, xưng hô, giọng nhân vật, định dạng và giọng đọc AI của kênh. Muốn đổi gì (ví dụ đổi giọng AI sang Vbee), chỉ cần nhờ `channel-profile` cập nhật hồ sơ; skill chỉ sửa mục liên quan và ghi vào nhật ký thay đổi.
+
+Lưu ý: hồ sơ không giữ đúng tên mục thì các skill khác sẽ không tìm thấy thông tin. Bạn sửa tay thoải mái, miễn giữ nguyên 10 tiêu đề đánh số.
 
 ## google-flow-image-generation
 
