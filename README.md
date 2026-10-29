@@ -5,6 +5,9 @@ Bộ agent skill cho Claude Code phục vụ công việc sáng tạo nội dung
 | Skill | Mô tả |
 | --- | --- |
 | [`google-flow-image-generation`](skills/google-flow-image-generation/SKILL.md) | Tạo ảnh bằng Google Flow qua Claude in Chrome, tải ảnh về và chuyển vào thư mục dự án. |
+| [`story-content-writer`](skills/story-content-writer/SKILL.md) | Biến chuyện thật của bạn thành kịch bản video ngắn, kịch bản YouTube dài, bài viết hoặc carousel kể chuyện. |
+| [`story-hook-writer`](skills/story-hook-writer/SKILL.md) | Viết 8–10 phương án câu mở đầu, tiêu đề, chữ thumbnail, có gắn nhãn loại và lọc giật tít, mồi tương tác. |
+| [`story-content-review`](skills/story-content-review/SKILL.md) | Chấm bản nháp theo 10 tiêu chí kể chuyện và kiểm tra riêng từng định dạng, trả về sửa đổi theo mức độ ưu tiên. |
 
 ## Cài đặt bằng npx
 
@@ -39,6 +42,30 @@ Bỏ `--agent claude-code` nếu muốn tự chọn agent khi cài, hoặc dùng
 git clone https://github.com/duongtuananh2211/creator-skills.git
 ln -s "$PWD/creator-skills/skills/google-flow-image-generation" ~/.claude/skills/
 ```
+
+Cài cả ba skill kể chuyện một lần:
+
+```bash
+npx skills add duongtuananh2211/creator-skills --skill story-content-writer story-hook-writer story-content-review --agent claude-code
+```
+
+## Bộ skill kể chuyện cho mạng xã hội
+
+Ba skill dành cho creator xây thương hiệu cá nhân, kể chuyện của chính mình trên TikTok, Reels, Shorts, YouTube, Facebook, Threads, LinkedIn, X và carousel. Mỗi skill cài và dùng riêng được, nhưng dùng cùng nhau thì thành một vòng: viết, chọn câu mở đầu, rồi chấm và sửa.
+
+| Skill | Bạn nói gì | Bạn nhận được gì |
+| --- | --- | --- |
+| `story-content-writer` | "Viết kịch bản TikTok 60 giây từ chuyện mình nghỉ việc" | Kịch bản hoặc bài hoàn chỉnh theo khuôn của định dạng, cấu trúc đã chọn, 2–3 câu mở đầu thay thế |
+| `story-hook-writer` | "Đặt tiêu đề và chữ thumbnail cho video này" | Bảng phương án theo loại câu móc, mỗi phương án được gắn 🟢/🟡/🔴, kèm 2–3 đề xuất và cách A/B test |
+| `story-content-review` | "Review giúp bài này, đăng được chưa?" | Điểm /50, vấn đề xếp theo 🔴 nghiêm trọng → 🟠 cấu trúc → 🟡 câu chữ, có trích nguyên văn và câu viết lại |
+
+Nguyên tắc chung của cả bộ:
+
+- **Không bịa chuyện của bạn.** Thiếu chi tiết thật thì skill hỏi lại hoặc để chỗ trống `[cần bổ sung: …]`, không tự thêm sự kiện, lời thoại hay con số.
+- **Không mồi tương tác, không giật tít.** Các câu kiểu "comment 'có' để nhận…" hay tiêu đề hứa nhiều hơn nội dung đều bị lọc, vì Meta, LinkedIn và YouTube đều giảm phân phối hoặc phạt loại này.
+- **Phân biệt bằng chứng.** Hướng dẫn chính thức của nền tảng được dẫn nguồn. Mẹo của người làm nghề và các con số ước lượng (như ngưỡng "Xem thêm", tốc độ nói 4,5–5,5 âm tiết/giây) được ghi rõ là ước lượng.
+
+Kiến thức chi tiết của từng skill nằm trong thư mục `references/` của skill đó và chỉ được đọc khi cần.
 
 ## google-flow-image-generation
 
