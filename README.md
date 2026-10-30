@@ -10,6 +10,7 @@ Bộ agent skill cho Claude Code phục vụ công việc sáng tạo nội dung
 | [`story-content-writer`](skills/story-content-writer/SKILL.md) | Biến chuyện thật của bạn thành kịch bản video ngắn, kịch bản YouTube dài, bài viết hoặc carousel kể chuyện. |
 | [`story-hook-writer`](skills/story-hook-writer/SKILL.md) | Viết 8–10 phương án câu mở đầu, tiêu đề, chữ thumbnail, có gắn nhãn loại và lọc giật tít, mồi tương tác. |
 | [`thumbnail-designer`](skills/thumbnail-designer/SKILL.md) | Thiết kế thumbnail YouTube: gom thumbnail tham khảo có điểm outlier, rút cơ chế, phác 3 concept để Test & Compare, viết prompt cho Flow và kiểm tra ảnh (phép thử 50% cho TV, cỡ điện thoại, đặt cạnh feed đối thủ). |
+| [`youtube-description-writer`](skills/youtube-description-writer/SKILL.md) | Viết mô tả YouTube theo hướng dẫn SEO chính thức: chọn từ khoá từ gợi ý tìm kiếm, câu mở trước "Hiện thêm", chương từ phụ đề bản dựng, công bố tài trợ, hashtag, thẻ, rồi chạy script kiểm tra. |
 | [`story-content-review`](skills/story-content-review/SKILL.md) | Chấm bản nháp theo 10 tiêu chí kể chuyện và kiểm tra riêng từng định dạng, trả về sửa đổi theo mức độ ưu tiên. |
 | [`script-review`](skills/script-review/SKILL.md) | Mở trang HTML cục bộ để bạn bôi đen, nhận xét, đề xuất câu thay thế cho từng đoạn kịch bản rồi gửi phản hồi về agent sửa theo vòng. |
 | [`story-voice-script`](skills/story-voice-script/SKILL.md) | Chuyển kịch bản thành lời đọc dán thẳng vào ElevenLabs hoặc Vbee, theo giọng điệu chọn (vui vẻ, tâm sự, hồi hộp…). |
@@ -52,7 +53,7 @@ ln -s "$PWD/creator-skills/skills/google-flow-image-generation" ~/.claude/skills
 Cài cả bộ skill kể chuyện (kèm `channel-profile` và `trending-topic-finder`) một lần. `trending-topic-finder` cần Python 3 để chạy script lấy dữ liệu xu hướng.
 
 ```bash
-npx skills add duongtuananh2211/creator-skills --skill channel-profile trending-topic-finder story-content-writer story-hook-writer thumbnail-designer story-content-review script-review story-voice-script long-video-to-shorts --agent claude-code
+npx skills add duongtuananh2211/creator-skills --skill channel-profile trending-topic-finder story-content-writer story-hook-writer thumbnail-designer youtube-description-writer story-content-review script-review story-voice-script long-video-to-shorts --agent claude-code
 ```
 
 ## Bộ skill kể chuyện cho mạng xã hội
@@ -122,7 +123,18 @@ Sau khi xuất video YouTube dài, nói "Cắt video này thành shorts" kèm đ
 4. cắt bằng `scripts/clipper.py` ra MP4 1080×1920 (nền mờ hoặc cắt khung, chuẩn hoá âm lượng), kèm file `.srt` riêng từng clip và ảnh xem trước;
 5. ghi `plan.md` với chữ móc, tiêu đề Shorts, chú thích và hashtag TikTok, Reels, và cách gắn "Video liên quan" về video dài.
 
-Kết quả nằm ở `shorts/<tên video>/`. Bản ffmpeg của Homebrew không có filter `subtitles`, nên phụ đề được nhập vào CapCut từ file `.srt`; nếu ffmpeg của bạn có libass, skill in thẳng phụ đề vào video.
+Kết quả nằm ở `shorts/<tên video>/`.
+
+### Viết mô tả YouTube: `youtube-description-writer`
+
+Khi đã chốt tiêu đề và có bản dựng cuối, nói "Viết mô tả cho video này" kèm kịch bản hoặc file phụ đề (hoặc link video đã đăng để góp ý mô tả cũ). Skill:
+
+1. đọc nội dung thật của video; với file `.srt`/`.vtt` thì rút gọn thành khối 30 giây để làm chương, với link thì lấy mô tả, chương, thẻ và phụ đề tự động bằng `yt-dlp`;
+2. chọn 1–2 từ khoá chính và vài từ liên quan từ gợi ý tìm kiếm YouTube ở Việt Nam (và số liệu Analytics nếu bạn dán vào), chỉ giữ từ mà video thật sự trả lời;
+3. viết mô tả theo khối: câu mở trọn ý trong khoảng 100 ký tự đầu, tóm tắt, chương, tài nguyên, xem tiếp, công bố tài trợ và ghi công, khối kênh dùng chung, 3–5 hashtag, cộng gợi ý thẻ cho ô Tags;
+4. chạy `scripts/desc_tools.py check`: giới hạn 5.000 ký tự, phần hiện trước "Hiện thêm", từ khoá nằm đâu, luật chương (00:00, ít nhất 3 mốc, mỗi chương ít nhất 10 giây), hashtag, link, câu lặp, dòng trông như danh sách từ khoá, ký tự `<` `>`.
+
+Kết quả nằm ở `descriptions/<tên video>.md`, khối kênh dùng chung ở `descriptions/channel-block.md`. Skill không nhồi từ khoá và không hứa kết quả SEO: YouTube xếp hạng tìm kiếm theo mức liên quan, tương tác và chất lượng, còn mô tả chỉ là một phần của mức liên quan. Bản ffmpeg của Homebrew không có filter `subtitles`, nên phụ đề được nhập vào CapCut từ file `.srt`; nếu ffmpeg của bạn có libass, skill in thẳng phụ đề vào video.
 
 ## google-flow-image-generation
 
