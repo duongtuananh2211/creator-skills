@@ -9,6 +9,7 @@ Bộ agent skill cho Claude Code phục vụ công việc sáng tạo nội dung
 | [`trending-topic-finder`](skills/trending-topic-finder/SKILL.md) | Tìm chủ đề đang hot ở Việt Nam (Google Trends, báo, Wikipedia, gợi ý tìm kiếm YouTube), lọc theo hồ sơ kênh và đề xuất ý tưởng video kèm tiêu đề đúng giọng kênh. |
 | [`story-content-writer`](skills/story-content-writer/SKILL.md) | Biến chuyện thật của bạn thành kịch bản video ngắn, kịch bản YouTube dài, bài viết hoặc carousel kể chuyện. |
 | [`story-hook-writer`](skills/story-hook-writer/SKILL.md) | Viết 8–10 phương án câu mở đầu, tiêu đề, chữ thumbnail, có gắn nhãn loại và lọc giật tít, mồi tương tác. |
+| [`thumbnail-designer`](skills/thumbnail-designer/SKILL.md) | Thiết kế thumbnail YouTube: gom thumbnail tham khảo có điểm outlier, rút cơ chế, phác 3 concept để Test & Compare, viết prompt cho Flow và kiểm tra ảnh (phép thử 50% cho TV, cỡ điện thoại, đặt cạnh feed đối thủ). |
 | [`story-content-review`](skills/story-content-review/SKILL.md) | Chấm bản nháp theo 10 tiêu chí kể chuyện và kiểm tra riêng từng định dạng, trả về sửa đổi theo mức độ ưu tiên. |
 | [`script-review`](skills/script-review/SKILL.md) | Mở trang HTML cục bộ để bạn bôi đen, nhận xét, đề xuất câu thay thế cho từng đoạn kịch bản rồi gửi phản hồi về agent sửa theo vòng. |
 | [`story-voice-script`](skills/story-voice-script/SKILL.md) | Chuyển kịch bản thành lời đọc dán thẳng vào ElevenLabs hoặc Vbee, theo giọng điệu chọn (vui vẻ, tâm sự, hồi hộp…). |
@@ -51,7 +52,7 @@ ln -s "$PWD/creator-skills/skills/google-flow-image-generation" ~/.claude/skills
 Cài cả bộ skill kể chuyện (kèm `channel-profile` và `trending-topic-finder`) một lần. `trending-topic-finder` cần Python 3 để chạy script lấy dữ liệu xu hướng.
 
 ```bash
-npx skills add duongtuananh2211/creator-skills --skill channel-profile trending-topic-finder story-content-writer story-hook-writer story-content-review script-review story-voice-script long-video-to-shorts --agent claude-code
+npx skills add duongtuananh2211/creator-skills --skill channel-profile trending-topic-finder story-content-writer story-hook-writer thumbnail-designer story-content-review script-review story-voice-script long-video-to-shorts --agent claude-code
 ```
 
 ## Bộ skill kể chuyện cho mạng xã hội
@@ -98,6 +99,18 @@ Agent xử lý từng nhận xét, lưu bản mới thành `<tên>.v2.md` (giữ
 Nói "Tuần này kênh mình nên làm gì, có trend nào hợp không?". Skill đọc hồ sơ kênh, chạy `scripts/trends.py` để lấy xu hướng hiện tại ở Việt Nam (Google Trends, Google News, VnExpress xem nhiều, Kenh14, Tuổi Trẻ, Thanh Niên, top lượt xem Wikipedia tiếng Việt, gợi ý tìm kiếm YouTube theo từ khoá của kênh), chấm từng trend theo mức hợp trụ cột, vòng đời, độ cạnh tranh và góc riêng của kênh, lọc chủ đề rủi ro (thảm kịch, vụ án đang điều tra, tin chưa kiểm chứng), rồi đề xuất 5–10 ý tưởng có nguồn, có độ gấp và tiêu đề đúng giọng kênh. Ý tưởng bạn chọn có thể lưu vào `content-ideas.md` để lần sau không bị trùng.
 
 Những nguồn cần đăng nhập (YouTube Studio → Xu hướng, TikTok Creative Center) skill không đọc được; skill sẽ nhờ bạn dán vào nếu muốn. Trang Thịnh hành của YouTube đã bị gỡ từ tháng 7/2025 nên không còn là nguồn. Có thể chạy định kỳ bằng `/loop` hoặc `/schedule`.
+
+### Thiết kế thumbnail: `thumbnail-designer`
+
+Sau khi chốt tiêu đề và chữ thumbnail với `story-hook-writer`, nói "Làm thumbnail cho video này". Skill:
+
+1. hỏi người xem nên **thắc mắc** gì và **cảm thấy** gì khi chỉ thấy thumbnail, gắn với cảnh có thật trong video;
+2. gom 10–15 thumbnail tham khảo từ 5 nguồn bằng `scripts/thumb_tools.py`: video vượt trội của chính kênh, của kênh cùng chủ đề, của kênh cùng định dạng khác chủ đề, thumbnail bạn đã lưu, và ảnh ngoài YouTube bạn thả vào. Điểm outlier là lượt xem chia trung vị của kênh đó;
+3. rút cơ chế của từng mẫu (nó gợi thắc mắc, cảm xúc bằng cách nào) và chuyển sang video của bạn, không chép hình;
+4. phác 3 concept khác góc tiếp cận cho Test & Compare, mỗi concept có bố cục, 3–5 phương án chữ, prompt ảnh cho `google-flow-image-generation` (mặc định ảnh không chữ, đè chữ tiếng Việt sau);
+5. kiểm tra ảnh thật: chỉ nửa trên (giao diện TV), hai cỡ điện thoại, ảnh xám, góc nhãn thời lượng, và đặt ứng viên giữa feed đối thủ.
+
+Kết quả nằm ở `thumbnails/<tên video>/` (`brief.md`, `refs/`, `candidates/`). Script dùng `yt-dlp` để đọc dữ liệu công khai của YouTube (chạy qua `uvx` nếu chưa cài) và `ffmpeg` để ghép ảnh kiểm tra. Thư mục `refs/` chứa thumbnail của người khác, chỉ để tham khảo nội bộ.
 
 ### Cắt video dài thành Shorts, TikTok, Reels: `long-video-to-shorts`
 

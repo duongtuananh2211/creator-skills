@@ -26,6 +26,8 @@ Tiêu đề, thumbnail và 30 giây đầu phải là **cùng một lời hứa*
 
 **Chữ trên thumbnail:** người làm nghề thường khuyên khoảng 2–4 từ, chữ to, độ tương phản cao, đọc được trên màn hình điện thoại, chỉ một chủ thể hoặc một khuôn mặt với cảm xúc rõ. **YouTube không có giới hạn chính thức nào về số chữ.** Khuôn mặt hay cảm xúc trên thumbnail phải là thứ có trong video.
 
+**Thumbnail phải tự gây tò mò được** (người làm nghề, Aprilynne Alter 2026, https://www.youtube.com/watch?v=KE4zqD0ONDI): giao diện mới cho thumbnail to hơn và chữ tiêu đề nhỏ hơn, nên người xem lướt thumbnail trước, chỉ đọc tiêu đề khi đã chú ý. Khi viết chữ thumbnail, nghĩ trước người xem sẽ thắc mắc gì và cảm thấy gì nếu chỉ thấy thumbnail. Trên TV, trang chủ và mục đề xuất chỉ hiện nửa trên của thumbnail, nên chữ nên nằm ở 1/3 trên. Phần thiết kế hình (tham khảo, bố cục, prompt ảnh, kiểm tra) do skill `thumbnail-designer` đảm nhận nếu đã cài.
+
 **Các kiểu tiêu đề hợp với thương hiệu cá nhân** (kinh nghiệm người làm nghề; mỗi kiểu phải gắn với một khoảnh khắc trả thưởng có trong video):
 
 - Lý do cá nhân: "Vì sao mình nghỉ…"

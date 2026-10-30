@@ -90,7 +90,7 @@ Gợi ý cách thử:
 
 ### 5. Bước tiếp theo (tuỳ chọn)
 
-Nếu người dùng đã cài skill liên quan, có thể gợi ý một dòng: dùng `story-content-writer` để viết toàn bài hay kịch bản từ câu móc đã chọn, hoặc `story-content-review` để chấm điểm bản nháp hoàn chỉnh. Cũng hỏi xem họ có muốn lưu danh sách phương án thành file trong dự án không. Mặc định kết quả chỉ nằm trong khung chat.
+Nếu người dùng đã cài skill liên quan, có thể gợi ý một dòng: dùng `story-content-writer` để viết toàn bài hay kịch bản từ câu móc đã chọn, `story-content-review` để chấm điểm bản nháp hoàn chỉnh, hoặc với YouTube dài, `thumbnail-designer` để biến combo đã chọn thành concept thumbnail, prompt ảnh và bản kiểm tra. Cũng hỏi xem họ có muốn lưu danh sách phương án thành file trong dự án không. Mặc định kết quả chỉ nằm trong khung chat.
 
 ## Định dạng đầu ra
 
