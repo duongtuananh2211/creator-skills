@@ -12,6 +12,7 @@ Bộ agent skill cho Claude Code phục vụ công việc sáng tạo nội dung
 | [`story-content-review`](skills/story-content-review/SKILL.md) | Chấm bản nháp theo 10 tiêu chí kể chuyện và kiểm tra riêng từng định dạng, trả về sửa đổi theo mức độ ưu tiên. |
 | [`script-review`](skills/script-review/SKILL.md) | Mở trang HTML cục bộ để bạn bôi đen, nhận xét, đề xuất câu thay thế cho từng đoạn kịch bản rồi gửi phản hồi về agent sửa theo vòng. |
 | [`story-voice-script`](skills/story-voice-script/SKILL.md) | Chuyển kịch bản thành lời đọc dán thẳng vào ElevenLabs hoặc Vbee, theo giọng điệu chọn (vui vẻ, tâm sự, hồi hộp…). |
+| [`long-video-to-shorts`](skills/long-video-to-shorts/SKILL.md) | Cắt video YouTube dài thành clip dọc 9:16 cho Shorts, TikTok, Reels: chép lời, chọn và chấm khoảnh khắc, cắt bằng ffmpeg kèm phụ đề .srt, tiêu đề và chú thích từng nền tảng. |
 
 ## Cài đặt bằng npx
 
@@ -50,7 +51,7 @@ ln -s "$PWD/creator-skills/skills/google-flow-image-generation" ~/.claude/skills
 Cài cả bộ skill kể chuyện (kèm `channel-profile` và `trending-topic-finder`) một lần. `trending-topic-finder` cần Python 3 để chạy script lấy dữ liệu xu hướng.
 
 ```bash
-npx skills add duongtuananh2211/creator-skills --skill channel-profile trending-topic-finder story-content-writer story-hook-writer story-content-review script-review story-voice-script --agent claude-code
+npx skills add duongtuananh2211/creator-skills --skill channel-profile trending-topic-finder story-content-writer story-hook-writer story-content-review script-review story-voice-script long-video-to-shorts --agent claude-code
 ```
 
 ## Bộ skill kể chuyện cho mạng xã hội
@@ -97,6 +98,18 @@ Agent xử lý từng nhận xét, lưu bản mới thành `<tên>.v2.md` (giữ
 Nói "Tuần này kênh mình nên làm gì, có trend nào hợp không?". Skill đọc hồ sơ kênh, chạy `scripts/trends.py` để lấy xu hướng hiện tại ở Việt Nam (Google Trends, Google News, VnExpress xem nhiều, Kenh14, Tuổi Trẻ, Thanh Niên, top lượt xem Wikipedia tiếng Việt, gợi ý tìm kiếm YouTube theo từ khoá của kênh), chấm từng trend theo mức hợp trụ cột, vòng đời, độ cạnh tranh và góc riêng của kênh, lọc chủ đề rủi ro (thảm kịch, vụ án đang điều tra, tin chưa kiểm chứng), rồi đề xuất 5–10 ý tưởng có nguồn, có độ gấp và tiêu đề đúng giọng kênh. Ý tưởng bạn chọn có thể lưu vào `content-ideas.md` để lần sau không bị trùng.
 
 Những nguồn cần đăng nhập (YouTube Studio → Xu hướng, TikTok Creative Center) skill không đọc được; skill sẽ nhờ bạn dán vào nếu muốn. Trang Thịnh hành của YouTube đã bị gỡ từ tháng 7/2025 nên không còn là nguồn. Có thể chạy định kỳ bằng `/loop` hoặc `/schedule`.
+
+### Cắt video dài thành Shorts, TikTok, Reels: `long-video-to-shorts`
+
+Sau khi xuất video YouTube dài, nói "Cắt video này thành shorts" kèm đường dẫn file MP4. Skill:
+
+1. chép lời có thời gian bằng whisper.cpp chạy trên máy (`brew install whisper-cpp` và một model ggml, skill sẽ hỏi trước khi cài), hoặc nhập file `.srt` có sẵn (CapCut, YouTube Studio);
+2. tìm khoảng lặng và lần đổi ảnh để cắt đúng chỗ ngắt câu;
+3. chọn 3–8 khoảnh khắc đứng một mình được, chấm điểm, sửa đầu clip (vào muộn hơn, kéo câu mạnh lên đầu, chữ móc trên màn hình) mà không thêm nội dung video gốc không có, rồi đưa bảng kế hoạch để bạn chốt;
+4. cắt bằng `scripts/clipper.py` ra MP4 1080×1920 (nền mờ hoặc cắt khung, chuẩn hoá âm lượng), kèm file `.srt` riêng từng clip và ảnh xem trước;
+5. ghi `plan.md` với chữ móc, tiêu đề Shorts, chú thích và hashtag TikTok, Reels, và cách gắn "Video liên quan" về video dài.
+
+Kết quả nằm ở `shorts/<tên video>/`. Bản ffmpeg của Homebrew không có filter `subtitles`, nên phụ đề được nhập vào CapCut từ file `.srt`; nếu ffmpeg của bạn có libass, skill in thẳng phụ đề vào video.
 
 ## google-flow-image-generation
 
