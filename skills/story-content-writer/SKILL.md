@@ -75,7 +75,7 @@ Kiểm tra thêm hai điều nhạy cảm. Nếu chuyện nhắc đến người
 
 - Video ngắn dưới 30 giây: ABT hoặc kết quả trước.
 - Video ngắn 45–90 giây: kết quả trước (flashback), mini hành trình, hoặc cảnh rồi suy ngẫm kiểu The Moth.
-- YouTube dài: mini hành trình làm khung lớn, mỗi chương là một vòng ABT, mở bằng kết quả trước hoặc cảnh cao trào.
+- YouTube dài: mini hành trình làm khung lớn, mỗi chương là một vòng ABT và một chu kỳ năng lượng, mở bằng kết quả trước hoặc cảnh cao trào.
 - Bài chữ: cảnh rồi suy ngẫm, Story Spine, BAB, hoặc PAS khi chuyện là một sai lầm có cách sửa.
 - Carousel: Story Spine hoặc BAB, chia đều mỗi slide một nhịp.
 
@@ -104,6 +104,7 @@ Dùng template trong file reference của định dạng. Các nguyên tắc chu
 5. **Trung thực**: có chi tiết nào mình tự thêm mà người dùng chưa cung cấp không? Nếu có, xoá hoặc đổi thành `[cần bổ sung: …]`.
 6. **Vừa độ dài**: đã đếm âm tiết, chữ hoặc slide theo ngân sách trong reference chưa?
 7. **Câu mở đầu và CTA**: câu đầu có hứa đúng điều nội dung trả được không, CTA có phải mồi tương tác không?
+8. **Riêng YouTube dài**: khung hình đầu có khớp ý tưởng thumbnail không, có vào chương 1 trong khoảng 30 giây đầu không, mỗi chương có nhịp mở năng lượng cao và ghi chú hình hoặc tương phản không, và video có dừng ngay sau cao trào không? (Chi tiết ở mục 2–5 của `references/youtube-long.md`.)
 
 ### 6. Trình bày
 
@@ -123,7 +124,7 @@ Trình bày trong chat theo thứ tự này:
 **Cần bổ sung:** <liệt kê các [cần bổ sung: …] còn trong bài, hoặc "Không có">
 ```
 
-Các câu mở đầu thay thế phải khác góc nhau, không chỉ đổi vài chữ, và cũng phải đúng sự thật như bài chính. Cuối cùng, nhắc ngắn hai bước tiếp theo nếu phù hợp: cần thêm nhiều phương án hook, tiêu đề hoặc chữ trên thumbnail thì dùng `story-hook-writer` (nếu đã cài); muốn chấm điểm và nhận góp ý theo mức độ thì dùng `story-content-review` (nếu đã cài). Với video, người dùng thường muốn tự duyệt từng đoạn: gợi ý `script-review` (nếu đã cài) để mở trang HTML cho họ bôi đen, nhận xét từng câu rồi gửi phản hồi lại. Nếu người dùng muốn lưu, đề nghị ghi bài ra một file trong dự án của họ.
+Các câu mở đầu thay thế phải khác góc nhau, không chỉ đổi vài chữ, và cũng phải đúng sự thật như bài chính. Cuối cùng, nhắc ngắn hai bước tiếp theo nếu phù hợp: cần thêm nhiều phương án hook, tiêu đề hoặc chữ trên thumbnail thì dùng `story-hook-writer` (nếu đã cài); muốn chấm điểm và nhận góp ý theo mức độ thì dùng `story-content-review` (nếu đã cài). Với video, người dùng thường muốn tự duyệt từng đoạn: gợi ý `script-review` (nếu đã cài) để mở trang HTML cho họ bôi đen, nhận xét từng câu rồi gửi phản hồi lại. Với YouTube dài, nhắc thêm một dòng về bước thử bản dựng thô với 2–3 người xem trước khi đăng (mục 6 của `references/youtube-long.md`). Nếu người dùng muốn lưu, đề nghị ghi bài ra một file trong dự án của họ.
 
 ## Khi người dùng sửa hoặc phản hồi
 

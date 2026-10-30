@@ -38,10 +38,11 @@ Tiêu đề, thumbnail và 30 giây đầu phải là **cùng một lời hứa*
 
 **Khung cho 30 giây đầu** (tổng hợp, không phải công thức đã được chứng minh; số giây là mục tiêu, không phải luật):
 
-- 0–5 giây: chứng minh lời hứa bằng lời nói hoặc hình ảnh, tức là "xác nhận cú click".
-- 5–20 giây: nói rõ cái giá phải trả và video dành cho ai.
-- 20–40 giây: mở một vòng lặp ("chuyện thứ ba thì…"), hoặc cho biết video sẽ đi qua những gì.
-- Trước khoảng 45–60 giây: bắt đầu vào nội dung chính. Lời xin đăng ký và giới thiệu kênh để sau.
+- 0–5 giây: "xác nhận cú click" bằng hai lớp cùng lúc. Câu nói đầu tiên nhắc lại lời hứa của tiêu đề, và khung hình đầu tiên nhìn giống thumbnail (cùng chủ thể, bối cảnh, tông màu chính).
+- 5–20 giây: ba thứ, theo thứ tự nào cũng được: bối cảnh (chuyện gì đang diễn ra), cái được hoặc mất, và một khoảng trống tò mò sẽ chỉ được lấp ở cuối ("chuyện thứ ba thì…"). Nếu có, thêm một câu cho thấy công sức thật đã bỏ vào video ("mình ghi lại từng khoản chi suốt 12 tháng"), vì thứ trông tốn công thì được coi là đáng xem hơn (effort heuristic). Công sức phải có thật, đúng con số người dùng đưa.
+- Khoảng 20–30 giây: bắt đầu vào nội dung chính. Video tự sự chậm có thể tới khoảng 45–60 giây, nhưng đó là trần. Lời xin đăng ký và giới thiệu kênh để sau.
+
+Nguồn cho các mốc 5 giây và 20 giây, khung hình khớp thumbnail và tín hiệu công sức: Aprilynne Alter, *How MrBeast Solved YouTube* (2023), https://www.youtube.com/watch?v=5zu8s38ZwtQ, tổng hợp từ phỏng vấn MrBeast [người làm nghề]. Cơ chế effort heuristic có nghiên cứu (Kruger và cộng sự 2004), còn việc áp vào phần mở đầu video là suy luận.
 
 Với thương hiệu cá nhân, nhịp "vì sao chính mình kể chuyện này" là đòn bẩy, nhưng nên giữ ngắn.
 

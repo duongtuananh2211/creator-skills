@@ -58,7 +58,7 @@ Mỗi định dạng cần những phần sau:
 | Định dạng | Mỗi phương án gồm | Giới hạn gợi ý (ước lượng, không phải quy định) |
 |---|---|---|
 | Video ngắn | **Nói** (câu đầu tiên) · **Chữ** (chữ trên màn hình) · **Hình** (cảnh hoặc hành động ở giây 0–3) | Nói: khoảng 10–15 âm tiết, tức 2–3 giây nếu tính 4.5–5.5 âm tiết/giây. Chữ: khoảng 3–8 từ, bổ sung cho lời nói chứ không chép lại. Ba lớp phải cùng phục vụ một lời hứa. |
-| YouTube dài | **Tiêu đề** · **Chữ thumbnail** · **Mở đầu 30 giây** (2–4 câu, câu đầu xác nhận lời hứa) | Ý chính nằm trong khoảng 50–60 ký tự đầu của tiêu đề. Thumbnail khoảng 2–4 từ và không lặp lại tiêu đề. |
+| YouTube dài | **Tiêu đề** · **Chữ thumbnail** · **Khung hình đầu** (khớp thumbnail) · **Mở đầu 30 giây** (2–4 câu: câu đầu xác nhận lời hứa, rồi bối cảnh, cái được/mất, khoảng trống tò mò) | Ý chính nằm trong khoảng 50–60 ký tự đầu của tiêu đề. Thumbnail khoảng 2–4 từ và không lặp lại tiêu đề. Vào nội dung chính trong khoảng 20–30 giây. |
 | Bài viết | **Dòng 1**, cộng **dòng 2** nếu cần mở vòng lặp | Dòng 1 tự đứng được trong khoảng 100–125 ký tự. Ngưỡng "Xem thêm" khác nhau theo nền tảng, xem `titles-thumbnails.md`. |
 | Carousel | **Headline slide 1** · **Subline** | Headline khoảng 8–12 từ, vẫn đọc được khi ảnh thu nhỏ. Có thể gợi ý thêm câu cho slide 2. |
 
@@ -117,6 +117,7 @@ Video ngắn và YouTube có mỗi phương án gồm nhiều phần, nên dùng
 1. [Ngược đời] 🟡 Video phải giải thích rõ vì sao, không chỉ khẳng định
    Tiêu đề: Mình bỏ việc lương 30 triệu, và không hối hận vì lý do bạn nghĩ
    Thumbnail: KHÔNG PHẢI VÌ TIỀN
+   Khung hình đầu: Cận mặt, tay cầm lá đơn nghỉ việc, cùng nền và màu áo với thumbnail
    Mở đầu 30s: "Ai cũng hỏi mình nghỉ có tiếc lương không. Thật ra tiền là lý do cuối cùng. Trong video này mình kể ba chuyện đã khiến mình nộp đơn, và chuyện thứ ba thì chưa từng nói với bố mẹ."
 ```
 

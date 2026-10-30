@@ -49,11 +49,15 @@ Mở đầu chào hỏi; bối cảnh dài trước khi có xung đột; hai ba 
 
 ### Danh sách kiểm tra
 - [ ] **Tiêu đề, thumbnail và 30 giây đầu cùng một lời hứa.** YouTube đo riêng tỉ lệ người còn xem sau 30 giây đầu ("Intro"). Khi chỉ số này thấp, YouTube khuyên sửa tiêu đề và thumbnail "để khớp hơn với nội dung video" và thử lại 30 giây đầu [chính thức: https://support.google.com/youtube/answer/9314415].
-- [ ] **Câu đầu xác nhận cú nhấp.** Người vừa bấm vào phải thấy ngay đây đúng là thứ tiêu đề hứa.
-- [ ] **Vào nội dung trong khoảng 45–60 giây.** Hướng (nhanh, khớp, có úp mở) được nguồn chính thức và người làm nghề ủng hộ; con số giây cụ thể chỉ là kinh nghiệm [người làm nghề].
+- [ ] **Câu đầu và khung hình đầu xác nhận cú nhấp.** Người vừa bấm vào phải thấy ngay đây đúng là thứ tiêu đề hứa: câu nói đầu nhắc lại lời hứa của tiêu đề, khung hình đầu (theo ghi chú hình trong kịch bản) nhìn giống thumbnail về chủ thể, bối cảnh và màu chính [người làm nghề, Aprilynne Alter 2023: https://www.youtube.com/watch?v=5zu8s38ZwtQ]. Kịch bản không ghi chú hình thì hỏi người dùng cảnh mở đầu là gì.
+- [ ] **Trong khoảng 20 giây đầu có đủ bối cảnh, cái được/mất và một khoảng trống tò mò** sẽ được lấp ở cuối. Có thêm tín hiệu công sức thật (đã làm bao lâu, gom bao nhiêu tư liệu) là điểm cộng; tín hiệu công sức bị thổi phồng thì gắn cờ như phóng đại [người làm nghề, cùng nguồn].
+- [ ] **Vào nội dung trong khoảng 20–30 giây; trần khoảng 45–60 giây** cho video tự sự chậm. Hướng (nhanh, khớp, có úp mở) được nguồn chính thức và người làm nghề ủng hộ; con số giây cụ thể chỉ là kinh nghiệm [người làm nghề].
 - [ ] **Không mở bằng intro thương hiệu hoặc lời xin đăng ký.** YouTube (2011) khuyên đừng để intro hoành tráng thành ngôi sao, hãy cho người xem thấy bạn hoặc nội dung trước [chính thức, đã cũ: https://blog.youtube/creator-and-artist-stories/youtube-creator-playbook-tips-first-15].
 - [ ] **Có móc lại (re-hook)** ở các điểm chuyển: một câu hỏi mới, rủi ro tăng lên, đổi hình thức, hoặc úp mở một tiết lộ sắp tới. Tài liệu nội bộ MrBeast bị lộ (khoảng 2022) mô tả móc lại quanh phút 3 và phút 6 [người làm nghề]. Với video 8–30 phút, cứ khoảng 2–4 phút hoặc mỗi đầu chương nên có một điểm móc lại [người làm nghề, chưa có dữ liệu kiểm chứng].
 - [ ] **Không báo hiệu kết thúc sớm.** "Vậy là hết rồi", "trước khi kết thúc…" trước khi trả phần chính khiến người xem rời đi [người làm nghề, MrBeast doc]. Khuyến nghị "kết thúc đột ngột" của MrBeast đến từ định dạng thử thách giải trí; với video kể chuyện cá nhân, chỉ cần kết gọn sau phần trả.
+- [ ] **Kết ở cao trào.** Phần thưởng lớn nhất được tiết lộ gần cuối, và video dừng khi cảm xúc còn lên (căng, ấm hoặc vui), CTA ngắn đặt sau đó. Sau cao trào mà còn tóm tắt lại bài học, cảm ơn, nhắc đăng ký kéo dài là lỗi nhịp [người làm nghề, Aprilynne Alter 2023].
+- [ ] **Thân bài chia thành chu kỳ năng lượng**, không phải một đường dốc: mỗi chương mở bằng một nhịp năng lượng cao (sự kiện mới, luận điểm mới, móc lại) rồi mới hạ xuống để kể chi tiết. Chu kỳ khoảng 2–4 phút, ngắn ở đầu, dài dần về cuối; đoạn chậm và nhiều cảm xúc nhất nằm trong khoảng 20% cuối [người làm nghề, Aprilynne Alter 2023].
+- [ ] **Có đa dạng hình ảnh và tương phản** nếu kịch bản có cột hình: đổi hình khoảng mỗi 3–5 giây (cắt, B-roll, punch-in, góc máy phụ), và có một mạch xen để phá đơn điệu (tuyến phụ, tư liệu thật, clip). Một đoạn nói liền trước camera nhiều phút không ghi chú hình là chỗ dễ trũng [người làm nghề, cùng nguồn]. Video tự sự chậm được giãn nhịp này, đừng chấm như video thử thách.
 - [ ] **Nội dung hay đặt sớm.** YouTube khuyên nếu khoảnh khắc giữ chân tốt nhất nằm muộn thì đưa nó lên sớm hơn [chính thức].
 - [ ] **Rủi ro tăng dần** qua các phần, mỗi chuyển đoạn qua được phép thử "nhưng/vì vậy".
 - [ ] **Đoạn tài trợ** được lồng vào câu chuyện hoặc đặt sau một vòng úp mở mạnh; đoạn tài trợ tách rời thường tạo "hố" giữ chân [người làm nghề, MrBeast doc].
@@ -71,7 +75,9 @@ Mở đầu chào hỏi; bối cảnh dài trước khi có xung đột; hai ba 
 Vì Test & Compare chọn theo thời gian xem, một thumbnail mồi nhấp chuột có CTR cao nhưng làm người xem bỏ đi vẫn có thể thua.
 
 ### Lỗi hay gặp
-Gói nội dung không khớp video; intro chậm hoặc mang thương hiệu; điều hay nhất nằm cuối; sau phút đầu vẫn chỉ "nói về" thay vì "cho xem"; nửa sau chùng; báo hiệu kết thúc; các phần nối bằng "và rồi"; chỉ tối ưu cú nhấp. YouTube nói rõ nhấp vào không có nghĩa là đã xem, và đo "thời gian xem có giá trị" bằng khảo sát người xem [chính thức, 2021: https://blog.youtube/inside-youtube/on-youtubes-recommendation-system/].
+Gói nội dung không khớp video; khung hình đầu không liên quan tới thumbnail; intro chậm hoặc mang thương hiệu; điều hay nhất nằm cuối; sau phút đầu vẫn chỉ "nói về" thay vì "cho xem"; nói liền trước camera không đổi hình; nửa sau chùng vì cả video là một nhịp; báo hiệu kết thúc; kéo dài sau cao trào; các phần nối bằng "và rồi"; chỉ tối ưu cú nhấp.
+
+Khi bản nháp đã qua các kiểm tra trên, nhắc người dùng một dòng: cho 2–3 người xem bản dựng thô và ghi lại giây nào họ mất tập trung hoặc với lấy điện thoại; kịch bản không thay được bước này [người làm nghề, cùng nguồn]. YouTube nói rõ nhấp vào không có nghĩa là đã xem, và đo "thời gian xem có giá trị" bằng khảo sát người xem [chính thức, 2021: https://blog.youtube/inside-youtube/on-youtubes-recommendation-system/].
 
 ---
 

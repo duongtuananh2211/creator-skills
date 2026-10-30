@@ -89,7 +89,7 @@ Nếu có bất kỳ vấn đề 🔴 nào ở bước 5 thì bài chưa đăng 
 
 Đọc phần tương ứng trong `references/format-checks.md`. Những điểm thường quyết định nhất:
 - **Video ngắn**: người xem hiểu bài nói về gì trong khoảng 3 giây đầu; số âm tiết khớp thời lượng (ước tính 4,5–5,5 âm tiết/giây); chữ trên màn hình ngắn và xem không bật tiếng vẫn hiểu; không mở đầu bằng "Xin chào mọi người, hôm nay…".
-- **YouTube dài**: tiêu đề, thumbnail và 30 giây đầu cùng nói một lời hứa; có móc lại (re-hook) ở các điểm chuyển; không báo hiệu kết thúc trước khi trả phần chính.
+- **YouTube dài**: tiêu đề, thumbnail và 30 giây đầu cùng nói một lời hứa (câu đầu khớp tiêu đề, khung hình đầu khớp thumbnail); vào nội dung trong khoảng 20–30 giây; thân bài chia chu kỳ năng lượng, có móc lại (re-hook) và tương phản ở các điểm chuyển; kết ở cao trào, không báo hiệu kết thúc trước khi trả phần chính.
 - **Bài viết chữ**: dòng đầu tự đứng được trước nút "Xem thêm"; đọc trên điện thoại không bị thành bức tường chữ; không lạm dụng kiểu mỗi câu một dòng (broetry).
 - **Carousel**: slide 1 đủ mạnh để dừng lướt, slide 2 đứng riêng được; mỗi slide một ý; có mạch nối qua các slide; slide cuối chốt ý và chỉ một CTA.
 

@@ -221,6 +221,7 @@ The Moth dùng ba công cụ: cảnh (khoảnh khắc chính), tóm tắt (đẩ
 - Cắt bối cảnh xuống mức người xem cần để hiểu rủi ro; phần còn lại rải vào sau, khi cần.
 - Đếm số âm tiết với video (xem `format-checks.md`) và chỉ ra cần cắt bao nhiêu.
 - Kết ngay sau câu chốt; bỏ đoạn tóm tắt lại bài học lần hai.
+- Với YouTube dài bị chùng ở giữa: chia thân bài thành các chu kỳ 2–4 phút, mỗi chu kỳ mở bằng một nhịp năng lượng cao, và dời đoạn chậm nhiều cảm xúc nhất về khoảng 20% cuối (xem `format-checks.md`).
 
 ---
 
