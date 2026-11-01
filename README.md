@@ -15,6 +15,7 @@ Bộ agent skill cho Claude Code phục vụ công việc sáng tạo nội dung
 | [`script-review`](skills/script-review/SKILL.md) | Mở trang HTML cục bộ để bạn bôi đen, nhận xét, đề xuất câu thay thế cho từng đoạn kịch bản rồi gửi phản hồi về agent sửa theo vòng. |
 | [`story-voice-script`](skills/story-voice-script/SKILL.md) | Chuyển kịch bản thành lời đọc dán thẳng vào ElevenLabs hoặc Vbee, theo giọng điệu chọn (vui vẻ, tâm sự, hồi hộp…). |
 | [`long-video-to-shorts`](skills/long-video-to-shorts/SKILL.md) | Cắt video YouTube dài thành clip dọc 9:16 cho Shorts, TikTok, Reels: chép lời, chọn và chấm khoảnh khắc, cắt bằng ffmpeg kèm phụ đề .srt, tiêu đề và chú thích từng nền tảng. |
+| [`threejs-character-video`](skills/threejs-character-video/SKILL.md) | Khởi tạo dự án Three.js để dựng video từ nhân vật 3D: tập viết bằng TypeScript bám theo từng câu trong file .srt, animation Mixamo, nhép miệng theo giọng đọc, camera theo keyframe, xem trước trên trình duyệt và render ra MP4 kèm tiếng. |
 
 ## Cài đặt bằng npx
 
@@ -135,6 +136,18 @@ Khi đã chốt tiêu đề và có bản dựng cuối, nói "Viết mô tả c
 4. chạy `scripts/desc_tools.py check`: giới hạn 5.000 ký tự, phần hiện trước "Hiện thêm", từ khoá nằm đâu, luật chương (00:00, ít nhất 3 mốc, mỗi chương ít nhất 10 giây), hashtag, link, câu lặp, dòng trông như danh sách từ khoá, ký tự `<` `>`.
 
 Kết quả nằm ở `descriptions/<tên video>.md`, khối kênh dùng chung ở `descriptions/channel-block.md`. Skill không nhồi từ khoá và không hứa kết quả SEO: YouTube xếp hạng tìm kiếm theo mức liên quan, tương tác và chất lượng, còn mô tả chỉ là một phần của mức liên quan. Bản ffmpeg của Homebrew không có filter `subtitles`, nên phụ đề được nhập vào CapCut từ file `.srt`; nếu ffmpeg của bạn có libass, skill in thẳng phụ đề vào video.
+
+### Dựng video từ nhân vật 3D: `threejs-character-video`
+
+Nói "Init dự án Three.js để làm video nhân vật 3D, khung dọc". Skill:
+
+1. kiểm tra Node.js 20.19+, ffmpeg và Chrome bằng `scripts/scaffold.py check`;
+2. chép template Vite + TypeScript + Three.js vào thư mục mới (không ghi đè file có sẵn), tải robot mẫu CC0 và tạo giọng đọc demo tiếng Việt bằng `say -v Linh` kèm file `.srt`;
+3. chạy `npm install`, chụp vài khung kiểm tra và render thử `renders/demo.mp4`;
+4. đưa nhân vật của bạn vào (`.glb`, `.gltf`, `.fbx`; animation Mixamo tự khớp tên xương), `npm run inspect` để xem tên clip, blendshape, xương;
+5. dựng tập từ file giọng đọc và `.srt`: mỗi câu `cue:N` gắn với hành động, biểu cảm, góc máy; xem trước ở `npm run dev` (phím F để kéo camera tự do, K để copy vị trí camera vào tập), rồi `npm run render -- <tập>`.
+
+Render chạy từng khung trong Chrome ngầm và ghép bằng ffmpeg, nên kết quả lặp lại được và không rớt khung (trên Mac M2 Pro: 18 giây video 1080×1920 mất khoảng 10 giây). Phụ đề, nhạc nền và chữ móc vẫn làm trong CapCut. Có thể render nền trong suốt ra ProRes 4444 `.mov` bằng `--alpha`.
 
 ## google-flow-image-generation
 
