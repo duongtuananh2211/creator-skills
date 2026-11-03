@@ -7,6 +7,7 @@ Bộ agent skill cho Claude Code phục vụ công việc sáng tạo nội dung
 | [`google-flow-image-generation`](skills/google-flow-image-generation/SKILL.md) | Tạo ảnh bằng Google Flow qua Claude in Chrome, tải ảnh về và chuyển vào thư mục dự án. |
 | [`channel-profile`](skills/channel-profile/SKILL.md) | Dựng hồ sơ kênh khi khởi tạo dự án: niche, định vị, khán giả, người dẫn hoặc nhân vật đại diện, trụ cột nội dung, quy tắc; tuỳ chọn tra kênh cùng chủ đề trên web. |
 | [`trending-topic-finder`](skills/trending-topic-finder/SKILL.md) | Tìm chủ đề đang hot ở Việt Nam (Google Trends, báo, Wikipedia, gợi ý tìm kiếm YouTube), lọc theo hồ sơ kênh và đề xuất ý tưởng video kèm tiêu đề đúng giọng kênh. |
+| [`keyword-research`](skills/keyword-research/SKILL.md) | Tìm từ khoá cho kênh và cho từng video: mở rộng bằng gợi ý tìm kiếm YouTube, Google, TikTok, đo cạnh tranh trên trang kết quả YouTube, gom cụm theo ý định, xếp hạng theo độ hợp kênh và chỉ chỗ đặt từ khoá trên từng nền tảng. |
 | [`story-content-writer`](skills/story-content-writer/SKILL.md) | Biến chuyện thật của bạn thành kịch bản video ngắn, kịch bản YouTube dài, bài viết hoặc carousel kể chuyện. |
 | [`story-hook-writer`](skills/story-hook-writer/SKILL.md) | Viết 8–10 phương án câu mở đầu, tiêu đề, chữ thumbnail, có gắn nhãn loại và lọc giật tít, mồi tương tác. |
 | [`thumbnail-designer`](skills/thumbnail-designer/SKILL.md) | Thiết kế thumbnail YouTube: gom thumbnail tham khảo có điểm outlier, rút cơ chế, phác 3 concept để Test & Compare, viết prompt cho Flow và kiểm tra ảnh (phép thử 50% cho TV, cỡ điện thoại, đặt cạnh feed đối thủ). |
@@ -51,10 +52,10 @@ git clone https://github.com/duongtuananh2211/creator-skills.git
 ln -s "$PWD/creator-skills/skills/google-flow-image-generation" ~/.claude/skills/
 ```
 
-Cài cả bộ skill kể chuyện (kèm `channel-profile` và `trending-topic-finder`) một lần. `trending-topic-finder` cần Python 3 để chạy script lấy dữ liệu xu hướng.
+Cài cả bộ skill kể chuyện (kèm `channel-profile`, `trending-topic-finder` và `keyword-research`) một lần. `trending-topic-finder` và `keyword-research` cần Python 3 để chạy script lấy dữ liệu.
 
 ```bash
-npx skills add duongtuananh2211/creator-skills --skill channel-profile trending-topic-finder story-content-writer story-hook-writer thumbnail-designer youtube-description-writer story-content-review script-review story-voice-script long-video-to-shorts --agent claude-code
+npx skills add duongtuananh2211/creator-skills --skill channel-profile trending-topic-finder keyword-research story-content-writer story-hook-writer thumbnail-designer youtube-description-writer story-content-review script-review story-voice-script long-video-to-shorts --agent claude-code
 ```
 
 ## Bộ skill kể chuyện cho mạng xã hội
@@ -101,6 +102,19 @@ Agent xử lý từng nhận xét, lưu bản mới thành `<tên>.v2.md` (giữ
 Nói "Tuần này kênh mình nên làm gì, có trend nào hợp không?". Skill đọc hồ sơ kênh, chạy `scripts/trends.py` để lấy xu hướng hiện tại ở Việt Nam (Google Trends, Google News, VnExpress xem nhiều, Kenh14, Tuổi Trẻ, Thanh Niên, top lượt xem Wikipedia tiếng Việt, gợi ý tìm kiếm YouTube theo từ khoá của kênh), chấm từng trend theo mức hợp trụ cột, vòng đời, độ cạnh tranh và góc riêng của kênh, lọc chủ đề rủi ro (thảm kịch, vụ án đang điều tra, tin chưa kiểm chứng), rồi đề xuất 5–10 ý tưởng có nguồn, có độ gấp và tiêu đề đúng giọng kênh. Ý tưởng bạn chọn có thể lưu vào `content-ideas.md` để lần sau không bị trùng.
 
 Những nguồn cần đăng nhập (YouTube Studio → Xu hướng, TikTok Creative Center) skill không đọc được; skill sẽ nhờ bạn dán vào nếu muốn. Trang Thịnh hành của YouTube đã bị gỡ từ tháng 7/2025 nên không còn là nguồn. Có thể chạy định kỳ bằng `/loop` hoặc `/schedule`.
+
+### Tìm từ khoá: `keyword-research`
+
+Nói "Tìm từ khoá cho kênh mình" (bản đồ từ khoá theo từng trụ cột) hoặc "Video này nên dùng từ khoá gì" kèm ý tưởng, tiêu đề nháp hay kịch bản. Skill:
+
+1. đọc hồ sơ kênh, lập hạt giống từ trụ cột và cách khán giả gọi vấn đề (kể cả từ vùng miền, từ mượn, dạng không dấu);
+2. mở rộng bằng `scripts/kw.py expand`: gợi ý tìm kiếm YouTube, Google và TikTok ở Việt Nam, ghi cụm nào có trên nền tảng nào, ở thứ hạng nào, và hạt giống nào bị nền tảng trả rỗng (TikTok chặn gợi ý cho chủ đề như cờ bạc);
+3. đưa bạn link Google Trends đã bật bộ lọc YouTube Search, TikTok Creative Center, và hỏi bạn có muốn dán thêm dữ liệu từ Creator Search Insights, YouTube Studio hay vidIQ không;
+4. gom cụm theo ý định, rồi đo cạnh tranh bằng `kw.py serp`: trong 20 video đầu có bao nhiêu tiêu đề khớp đúng cụm, bao nhiêu video dưới 1 năm, lượt xem trung vị, kênh nào chiếm nhiều chỗ;
+5. chấm theo độ hợp kênh, nhu cầu, cạnh tranh, khoảng trống và xếp Ưu tiên / Thử / Kho / Bỏ, kèm lý do bằng số liệu thật;
+6. với một video: chọn từ khoá chính, từ phụ, câu hỏi làm tên chương, và chỉ chỗ đặt trên YouTube (tiêu đề, câu mở mô tả, chương, thẻ), Shorts và TikTok (chữ trên màn hình, câu nói đầu, chú thích, hashtag).
+
+Cụm bạn chọn có thể lưu vào `keyword-bank.md`. Không công cụ miễn phí nào script đọc được cho ra lượt tìm, nên skill ghi nguồn của từng tín hiệu và không nói "X nghìn người tìm" khi bạn chưa dán số từ công cụ có ước lượng.
 
 ### Thiết kế thumbnail: `thumbnail-designer`
 
